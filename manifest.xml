@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!DOCTYPE plugin SYSTEM "manifest.dtd">
+<plugin version="2">
+	<info>
+		<version>0.2</version>
+		<name>google2fa</name>
+		<title>Two-factor authentication</title>
+		<author>Norman Thimm</author>
+		<authorURL>http://www.familiethimm.de</authorURL>
+		<description>Plugin to support two-factor authentication with Google Authenticator</description>
+	</info>
+        <config>
+                <configfile>config.php</configfile>
+        </config>
+        <translations>
+                <translationsdir>languages</translationsdir>
+        </translations>
+	<components>
+		<component>
+			<info>
+				<name>google2faplugin</name>
+				<title>Google2FAPlugin</title>
+				<author>Norman Thimm</author>
+				<description>Two-factor authentication</description>
+			</info>
+			<files>
+				<client>
+					<clientfile load="release">js/data/Configuration.js</clientfile>
+					<clientfile load="release">js/data/ResponseHandler.js</clientfile>
+					<clientfile load="release">js/data/Helper.js</clientfile>
+					<clientfile load="release">js/Google2FAPlugin.js</clientfile>
+					<clientfile load="release">js/settings/SettingsGoogle2FACategory.js</clientfile>
+					<clientfile load="release">js/settings/SettingsGoogle2FAWidget.js</clientfile>
+				</client>
+				<server>
+					<serverfile>php/plugin.google2fa.php</serverfile>
+					<serverfile type="module" module="google2famodule">php/class.google2famodule.php</serverfile>
+				</server>
+				<resources>
+                                        <resourcefile load="release">resources/css/google2fa.css</resourcefile>
+				</resources>
+                        </files>
+		</component>
+	</components>
+</plugin>

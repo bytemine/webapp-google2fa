@@ -1,0 +1,193 @@
+# Translation for plugin Google2FA.
+# Copyright (C) 2015 Norman Thimm, GNU Affero General Public License (AGPL) version 3
+# This file is distributed under the same license as the Google2FA package.
+# Norman Thimm <norman@familiethimm.de>, 2015.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-12-10 19:03+0100\n"
+"PO-Revision-Date: 2015-12-10 19:03+0100\n"
+"Last-Translator: Norman Thimm <norman@familiethimm.de>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: php/plugin.google2fa.php:88 js/settings/SettingsGoogle2FAWidget.js:193
+msgid "Please enter code"
+msgstr ""
+
+#: php/plugin.google2fa.php:89 js/settings/SettingsGoogle2FAWidget.js:128
+msgid "Code"
+msgstr ""
+
+#: php/plugin.google2fa.php:90
+msgid "Invalid code. Please check code."
+msgstr ""
+
+#: php/plugin.google2fa.php:91
+msgid "Login"
+msgstr ""
+
+#: js/settings/SettingsGoogle2FAWidget.js:19
+msgid "Configuration two-factor authentication"
+msgstr ""
+
+#: js/settings/SettingsGoogle2FAWidget.js:24
+msgid "The two-factor authentication provides an additional protection for the Zarafa WebApp."
+msgstr ""
+
+#: js/settings/SettingsGoogle2FAWidget.js:25
+msgid "After activation you need next to your password an one-time code to log in."
+msgstr ""
+
+#: js/settings/SettingsGoogle2FAWidget.js:26
+msgid "To generate an one-time code, you have to configure a second device, usually a smartphone."
+msgstr ""
+
+#: js/settings/SettingsGoogle2FAWidget.js:29
+#: js/settings/SettingsGoogle2FAWidget.js:173
+msgid "Configuration"
+msgstr ""
+
+#: js/settings/SettingsGoogle2FAWidget.js:37
+msgid "For alternative access generate time-independent codes, please."
+msgstr ""
+
+#: js/settings/SettingsGoogle2FAWidget.js:38
+msgid "For example, if you lose your smartphone, you can access using these codes."
+msgstr ""
+
+#: js/settings/SettingsGoogle2FAWidget.js:41
+#: js/settings/SettingsGoogle2FAWidget.js:137
+msgid "Time-independent codes"
+msgstr ""
+
+#: js/settings/SettingsGoogle2FAWidget.js:49
+msgid "Activate or deactivate the two-factor authentication."
+msgstr ""
+
+#: js/settings/SettingsGoogle2FAWidget.js:52
+msgid "Current status"
+msgstr ""
+
+#: js/settings/SettingsGoogle2FAWidget.js:63
+msgid "Activation/Deactivation"
+msgstr ""
+
+#: js/settings/SettingsGoogle2FAWidget.js:71
+msgid "You can completely reset the configuration."
+msgstr ""
+
+#: js/settings/SettingsGoogle2FAWidget.js:72
+msgid "This deletes the secret key, the time-independent and the recently used codes and deactivates the two-factor authentication."
+msgstr ""
+
+#: js/settings/SettingsGoogle2FAWidget.js:73
+msgid "If fundamental changes in the configuration were changed, for example the encryption type, this step may be useful."
+msgstr ""
+
+#: js/settings/SettingsGoogle2FAWidget.js:76
+#: js/settings/SettingsGoogle2FAWidget.js:92
+#: js/settings/SettingsGoogle2FAWidget.js:113
+msgid "Reset"
+msgstr ""
+
+#: js/settings/SettingsGoogle2FAWidget.js:87
+msgid "Activated"
+msgstr ""
+
+#: js/settings/SettingsGoogle2FAWidget.js:87
+msgid "Deactivated"
+msgstr ""
+
+#: js/settings/SettingsGoogle2FAWidget.js:93
+msgid "Do you really want to reset the configuration?"
+msgstr ""
+
+#: js/settings/SettingsGoogle2FAWidget.js:114
+msgid "The configuration has been reset."
+msgstr ""
+
+#: js/settings/SettingsGoogle2FAWidget.js:132
+msgid "Code {0}"
+msgstr ""
+
+#: js/settings/SettingsGoogle2FAWidget.js:138
+msgid "Write down these time-independent codes safely."
+msgstr ""
+
+#: js/settings/SettingsGoogle2FAWidget.js:139
+msgid "Remember that you can use each code only one-time."
+msgstr ""
+
+#: js/settings/SettingsGoogle2FAWidget.js:140
+msgid "You can always generate new codes."
+msgstr ""
+
+#: js/settings/SettingsGoogle2FAWidget.js:143
+msgid "Generate new codes"
+msgstr ""
+
+#: js/settings/SettingsGoogle2FAWidget.js:146
+msgid "Ok"
+msgstr ""
+
+#: js/settings/SettingsGoogle2FAWidget.js:174
+msgid "Please install an authentication App on second device:"
+msgstr ""
+
+#: js/settings/SettingsGoogle2FAWidget.js:175
+msgid "Google Authenticator (Android, iOS, BlackBerry), Authenticator (Windows Phone)"
+msgstr ""
+
+#: js/settings/SettingsGoogle2FAWidget.js:176
+msgid "Open and configure the authentication app by scanning the QR code below."
+msgstr ""
+
+#: js/settings/SettingsGoogle2FAWidget.js:178
+msgid "Alternatively, you can manually create an account with the following information."
+msgstr ""
+
+#: js/settings/SettingsGoogle2FAWidget.js:179
+msgid "Account"
+msgstr ""
+
+#: js/settings/SettingsGoogle2FAWidget.js:179
+msgid "Key"
+msgstr ""
+
+#: js/settings/SettingsGoogle2FAWidget.js:180
+msgid "Afterwards test the function with a generated code to ensure that the configurations are correct."
+msgstr ""
+
+#: js/settings/SettingsGoogle2FAWidget.js:183
+#: js/settings/SettingsGoogle2FAWidget.js:193
+#: js/settings/SettingsGoogle2FAWidget.js:208
+#: js/settings/SettingsGoogle2FAWidget.js:216
+msgid "Test generated code"
+msgstr ""
+
+#: js/settings/SettingsGoogle2FAWidget.js:209
+msgid "Valid code, you can use the two-factor authentication."
+msgstr ""
+
+#: js/settings/SettingsGoogle2FAWidget.js:217
+msgid "Invalid code, please check code."
+msgstr ""
+
+#: js/settings/SettingsGoogle2FAWidget.js:218
+msgid "You can use a code only one-time."
+msgstr ""
+
+#: js/settings/SettingsGoogle2FAWidget.js:219
+msgid "Please make sure that time from of server and second device are correct."
+msgstr ""
+
+#: js/settings/SettingsGoogle2FACategory.js:19
+msgid "Two-factor authentication"
+msgstr ""
