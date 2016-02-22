@@ -57,6 +57,10 @@ class PluginGoogle2FA extends Plugin {
 					|| !Google2FAData::isActivated()
 					|| (Google2FAData::getSecret() === '' && $tc[0] === '' ))
 					break;
+				
+				// Check if Client-IP is in Whitelist
+				if (PLUGIN_GOOGLE2FA_WHITELIST !== "" && preg_match(PLUGIN_GOOGLE2FA_WHITELIST, $_SERVER['REMOTE_ADDR']))
+					break;
 
 				// Check, if token authorisation is already done (example: attachment-upload)
 				if (array_key_exists('google2FALoggedOn', $_SESSION) && $_SESSION['google2FALoggedOn']) {

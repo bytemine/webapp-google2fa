@@ -41,7 +41,7 @@ define('PLUGIN_GOOGLE2FA_CRYPT', 'auto');
 define('PLUGIN_GOOGLE2FA_MCRYPTKEY', 'GR6XTMQ45209zTRy8TYZ2F2PJ7pLAxM6mpYEaVyXEQ1igr2aOAEonLUV9S6x3OVZExEP9fJomdivPZY9z5ewcrCsN79KUW49');
 define('PLUGIN_GOOGLE2FA_MCRYPTALGORITHM', MCRYPT_DES); // better (only libmcrypt > 2.4.x): MCRYPT_RIJNDAEL_128
 define('PLUGIN_GOOGLE2FA_MCRYPTMODE', MCRYPT_MODE_ECB);
-define('PLUGIN_GOOGLE2FA_MCRYPTRAND', strncasecmp(PHP_OS, 'WIN', 3)==0 ? MCRYPT_RAND : MCRYPT_MODE_DEV_URANDOM);
+define('PLUGIN_GOOGLE2FA_MCRYPTRAND', strncasecmp(PHP_OS, 'WIN', 3)==0 ? MCRYPT_RAND : MCRYPT_DEV_URANDOM);
 
 /**
  * Enable/Disable plugin
@@ -78,5 +78,12 @@ define('PLUGIN_GOOGLE2FA_ENBUTTCODES', true);
  * For example for admin administration in mysql, ldap, ...
  */
 define('PLUGIN_GOOGLE2FA_ENBUTTRESET', true);
+
+/**
+ * IP Whitelist for login without 2FA / regular expression
+ * f.e. '/^192\.168\.178\.([2-4][0-9]|50)$/' for 192.168.178.20 - 192.168.178.50
+ * Generate regular expression: http://www.analyticsmarket.com/freetools/ipregex
+ */
+define('PLUGIN_GOOGLE2FA_WHITELIST', '');
 
 ?>
