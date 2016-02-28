@@ -49,10 +49,8 @@ class PluginGoogle2FA extends Plugin {
 					$GLOBALS["settings"]->saveSettings();
 				}
 				
-				if (PLUGIN_GOOGLE2FA_ALWAYS_ACTIVATED) {
-					$GLOBALS["settings"]->set('zarafa/v1/plugins/google2fa/activate', true);
-					$GLOBALS["settings"]->saveSettings();
-				}
+				if (PLUGIN_GOOGLE2FA_ALWAYS_ACTIVATED)
+					Google2FAData::setActivate(true);
 			
 				$tc = Google2FAData::getTimelessCodes();
 	

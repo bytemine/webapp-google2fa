@@ -73,6 +73,7 @@ define('PLUGIN_GOOGLE2FA_ACTIVATE', false);
 
 /**
  * Activate 2FA when plugin is loading.
+ * If PLUGIN_GOOGLE2FA_ALWAYS_ACTIVATED is true, PLUGIN_GOOGLE2FA_ENBUTACTIV should be false
  */
 define('PLUGIN_GOOGLE2FA_ALWAYS_ACTIVATED', false);
 
