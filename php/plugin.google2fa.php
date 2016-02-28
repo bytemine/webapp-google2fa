@@ -48,6 +48,11 @@ class PluginGoogle2FA extends Plugin {
 					$GLOBALS["settings"]->set('zarafa/v1/plugins/google2fa/enable', true);
 					$GLOBALS["settings"]->saveSettings();
 				}
+				
+				if (PLUGIN_GOOGLE2FA_ALWAYS_ACTIVATED) {
+					$GLOBALS["settings"]->set('zarafa/v1/plugins/google2fa/activate', true);
+					$GLOBALS["settings"]->saveSettings();
+				}
 			
 				$tc = Google2FAData::getTimelessCodes();
 	
@@ -114,7 +119,7 @@ class PluginGoogle2FA extends Plugin {
 							'enable_but_tcodes' => PLUGIN_GOOGLE2FA_ENBUTTCODES,
 							'enable_but_reset' => PLUGIN_GOOGLE2FA_ENBUTTRESET,
 							'secret_key' => '',
-							'activate' => false,
+							'activate' => PLUGIN_GOOGLE2FA_ACTIVATE,
 							'encryption' => '',
 							'used_codes' => '',
 							'timeless_codes' => ''

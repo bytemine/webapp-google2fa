@@ -66,6 +66,17 @@ define('PLUGIN_GOOGLE2FA_ENABLE', true);
 define('PLUGIN_GOOGLE2FA_ALWAYS_ENABLED', false);
 
 /**
+ * Activate/Deactivate 2FA
+ * Default for new users.
+ */
+define('PLUGIN_GOOGLE2FA_ACTIVATE', false);
+
+/**
+ * Activate 2FA when plugin is loading.
+ */
+define('PLUGIN_GOOGLE2FA_ALWAYS_ACTIVATED', false);
+
+/**
  * Enable/Disable button configuration in settings.
  * For example for admin administration in mysql, ldap, ...
  */
