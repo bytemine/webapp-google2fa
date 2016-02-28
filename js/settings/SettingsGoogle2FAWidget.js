@@ -119,7 +119,7 @@ Zarafa.plugins.google2fa.settings.SettingsGoogle2FAWidget = Ext.extend(Zarafa.se
 	},
 	openTimelessCodesDialog: function() 
 	{
-		container.getRequest().singleRequest("google2famodule", "gettimelesscodes", {}, new Zarafa.plugins.google2fa.data.ResponseHandler({
+		container.getRequest().singleRequest("google2famodule", "gettimelesscodes", {generate: false}, new Zarafa.plugins.google2fa.data.ResponseHandler({
 			successCallback: this.openTimelessCodesDialogX.createDelegate(this)
 		}))
 	},

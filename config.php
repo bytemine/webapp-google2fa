@@ -20,10 +20,20 @@ define('PLUGIN_GOOGLE2FA_APPNAME', 'WebApp');
 define('PLUGIN_GOOGLE2FA_TCODES', 9);
 
 /** 
- * Select database ('settings')
+ * Select database ('settings', 'mysql')
  * Be careful if you change it later. You have to migrate data or the user has to configure again.
  */
 define('PLUGIN_GOOGLE2FA_DATABASE', 'settings');
+
+/**
+ * DB connection data in case of using database like mysql
+ * If PLUGIN_GOOGLE2FA_DATABASE_CREATETABLES is true, tables will be automatically created if not exist (db-user needs rights)
+ */
+define('PLUGIN_GOOGLE2FA_DATABASE_SERVERNAME', 'localhost');
+define('PLUGIN_GOOGLE2FA_DATABASE_DBNAME', 'google2fa');
+define('PLUGIN_GOOGLE2FA_DATABASE_USERNAME', 'google2fa');
+define('PLUGIN_GOOGLE2FA_DATABASE_PASSWORD', 'password');
+define('PLUGIN_GOOGLE2FA_DATABASE_CREATETABLES', true);
 
 /**
  * The cryption type ('auto', 'no', 'base64', 'mcrypt')

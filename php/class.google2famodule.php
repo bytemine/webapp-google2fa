@@ -79,8 +79,8 @@ class Google2FAModule extends Module {
 		Google2FAData::setActivate(false);
 		Google2FAData::setCryption("");
 		Google2FAData::setSecret("");
-		Google2FAData::setTimelessCodes("");
-		Google2FAData::setUsedCodes("");
+		Google2FAData::setTimelessCodes(array());
+		Google2FAData::delUsedCodes();
                 $response['isActivated'] = false;
 		$this->addActionData("resetconfiguration", $response);
 		$GLOBALS["bus"]->addData($this->getResponseData());
@@ -144,14 +144,18 @@ class Google2FAModule extends Module {
 	private function getTimelessCodes($actionData) {
 		$generate = $actionData['generate'];
 		$codes = Google2FAData::getTimelessCodes();
-		if ($generate || !$codes || count($codes) === 0 || $codes[0] === "") {
+		if ($codes !== false) {
+			if ($generate || count($codes) === 0 || $codes[0] === "") {
+				$codes = array();
+				for ($i=0; $i<PLUGIN_GOOGLE2FA_TCODES; $i++)
+					array_push($codes, mt_rand(100000, 999999));
+				Google2FAData::setTimelessCodes($codes);
+			}
+			foreach ($codes as &$code)
+				$code = base64_encode($code);
+		} else {
 			$codes = array();
-			for ($i=0; $i<PLUGIN_GOOGLE2FA_TCODES; $i++)
-				array_push($codes, mt_rand(100000, 999999));
-			Google2FAData::setTimelessCodes($codes);
 		}
-		foreach ($codes as &$code)
-			$code = base64_encode($code);
 		$response = array();
 		$response['codes'] = $codes;
 		$this->addActionData("gettimelesscodes", $response);
@@ -167,12 +171,17 @@ class Google2FAModule extends Module {
 	 */
 	private function getSecret() {
 		$secret = Google2FAData::getSecret();
-		if ($secret === "")
-			$secret = $this->createSecret();
 		$user = $_SESSION["username"];
 		$response = array();
-		$response['qRCodeGoogleUrl'] = base64_encode($this->ga->getQRCodeGoogleUrl($user, $secret, PLUGIN_GOOGLE2FA_APPNAME));
-		$response['secret'] = base64_encode($secret);
+		if ($secret !== false) {
+			if ($secret === "")
+				$secret = $this->createSecret();
+			$response['qRCodeGoogleUrl'] = base64_encode($this->ga->getQRCodeGoogleUrl($user . "@" . PLUGIN_GOOGLE2FA_APPNAME, $secret, PLUGIN_GOOGLE2FA_APPNAME));
+			$response['secret'] = base64_encode($secret);
+		} else {
+			$response['qRCodeGoogleUrl'] = "";
+			$response['secret'] = "";
+		}
 		$response['application'] = PLUGIN_GOOGLE2FA_APPNAME;
 		$response['username'] = $user;
 		$this->addActionData("getsecret", $response);
