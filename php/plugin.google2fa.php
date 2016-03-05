@@ -60,8 +60,12 @@ class PluginGoogle2FA extends Plugin {
 					break;
 				
 				// Check if Client-IP is in Whitelist
-				if (PLUGIN_GOOGLE2FA_WHITELIST !== "" && preg_match(PLUGIN_GOOGLE2FA_WHITELIST, $_SERVER['REMOTE_ADDR']))
-					break;
+				if (PLUGIN_GOOGLE2FA_WHITELIST !== "") {
+					foreach (explode (",", PLUGIN_GOOGLE2FA_WHITELIST) as $range) {
+						if (self::ip_in_range($_SERVER['REMOTE_ADDR'], $range))
+							break 2;
+					}
+				}
 
 				// Check, if token authorisation is already done (example: attachment-upload)
 				if (array_key_exists('google2FALoggedOn', $_SESSION) && $_SESSION['google2FALoggedOn']) {
@@ -98,6 +102,27 @@ class PluginGoogle2FA extends Plugin {
 				header('Location: plugins/google2fa/php/login.php', true, 303); // delete GLOBALS, go to token page
                                 exit; // don't execute header-function in index.php
                 }
+	}
+
+	/**
+	 * Check if a given ip is in a network
+	 * (https://gist.github.com/tott/7684443)
+	 *
+	 * @param  string $ip    IP to check in IPV4 format eg. 127.0.0.1
+	 * @param  string $range IP/CIDR netmask eg. 127.0.0.0/24, also 127.0.0.1 is accepted and /32 assumed
+	 * @return boolean true if the ip is in this range / false if not.
+	 */
+	function ip_in_range( $ip, $range ) {
+		if ( strpos( $range, '/' ) == false ) {
+			$range .= '/32';
+		}
+		// $range is in IP/CIDR format eg 127.0.0.1/24
+		list( $range, $netmask ) = explode( '/', $range, 2 );
+		$range_decimal = ip2long( $range );
+		$ip_decimal = ip2long( $ip );
+		$wildcard_decimal = pow( 2, ( 32 - $netmask ) ) - 1;
+		$netmask_decimal = ~ $wildcard_decimal;
+		return ( ( $ip_decimal & $netmask_decimal ) == ( $range_decimal & $netmask_decimal ) );
 	}
 
 	/**
