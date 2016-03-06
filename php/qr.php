@@ -1,4 +1,12 @@
 <?
+/**
+ * PHP file that presents itself as a QR Code with the 2FA information of the user
+ *
+ * @author Norman Thimm
+ * @copyright 2016 Norman Thimm
+ * @license http://www.gnu.org/licenses/ GNU Affero General Public License
+ * @link http://www.familiethimm.de/
+ */
 
 	require "../../../config.php";
 
