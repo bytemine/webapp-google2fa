@@ -52,14 +52,12 @@ class PluginGoogle2FA extends Plugin {
 				if (PLUGIN_GOOGLE2FA_ALWAYS_ACTIVATED)
 					Google2FAData::setActivate(true);
 			
-				$tc = Google2FAData::getTimelessCodes();
-	
-				// Check, if user has enabled plugin, activate token authorisation and created secret key or timeless codes
+				// Check, if user has enabled plugin and has activated 2FA
 				if (!$GLOBALS["settings"]->get('zarafa/v1/plugins/google2fa/enable')
 					|| !Google2FAData::isActivated())
 					break;
 				
-				// Check if Client-IP is in Whitelist
+				// Check, if Client-IP is in Whitelist
 				if (PLUGIN_GOOGLE2FA_WHITELIST !== "") {
 					foreach (explode (",", PLUGIN_GOOGLE2FA_WHITELIST) as $range) {
 						if (self::ip_in_range($_SERVER['REMOTE_ADDR'], $range))
