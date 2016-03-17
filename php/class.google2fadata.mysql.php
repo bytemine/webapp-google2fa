@@ -22,7 +22,7 @@ class Google2FAData {
 	protected static function initConn() {
 		
 		if (!extension_loaded("mysqli"))
-			die("PHP Module MYSQLI not loaded!");
+			throw new Exception("PHP Module MYSQLI not loaded!");
 
 		if (self::$conn == null) {
 			
@@ -32,7 +32,7 @@ class Google2FAData {
 
 			// Check connection
 			if (mysqli_connect_error()) { // no object-oriented check because of compatibility with PHP 5.2.9 and 5.3.0
-				die("MySQL connection failed: " . mysqli_connect_error());
+				throw new Exception("MySQL connection failed: " . mysqli_connect_error());
 			}
 
 			// Create tables
@@ -43,18 +43,18 @@ class Google2FAData {
 					"`encryption` varchar(6) COLLATE utf8_unicode_ci NOT NULL DEFAULT '', `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP, " .
 					"PRIMARY KEY (`id`), KEY `username` (`username`(333)), KEY `id` (`id`)) ENGINE=MyISAM " .
 					"DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;"))
-					die ("MySQL error: table user can't created");
+					throw new Exception(self::$conn->error);
 				if (!self::$conn->query("CREATE TABLE IF NOT EXISTS `used_codes` (" .
 					"`user_id` int(11) NOT NULL, `code` varchar(18) COLLATE utf8_unicode_ci NOT NULL, " .
 					"`created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP, KEY `user_id` (`user_id`), " .
 					"KEY `code` (`code`), KEY `created` (`created`)" .
 					") ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;"))
-					die ("MySQL error: table used_codes can't created");
+					throw new Exception(self::$conn->error);
 				if (!self::$conn->query("CREATE TABLE IF NOT EXISTS `timeless_codes` (" .
 					"`user_id` int(11) NOT NULL, `code` varchar(18) COLLATE utf8_unicode_ci NOT NULL, " .
 					"`created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP, KEY `user_id` (`user_id`), " .
 					"KEY `code` (`code`)) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;"))
-					die ("MySQL error: table timeless_codes can't created");
+					throw new Exception(self::$conn->error);
 			}
 
 			// Get user_id - insert user if he/she doesn't exists
@@ -68,7 +68,7 @@ class Google2FAData {
 				}
 				$result->close();
 			} else {
-				die ("MySQL error: can't get id from user");	
+				throw new Exception(self::$conn->error);
 			}
 		}
 		return self::$conn;
@@ -77,25 +77,24 @@ class Google2FAData {
 	/**
 	 * Get secret key
 	 *
-	 * @return string or false
+	 * @return string
 	 */
 	public static function getSecret() {
 		if ($result = self::initConn()->query("SELECT `secret_key` FROM `user` WHERE `id` =" . self::$user_id . " LIMIT 1;")) {
 			$secret_key = $result->fetch_object()->secret_key;
 			$result->close();
 			return Google2FACrypt::decrypt($secret_key);
-		}
-		return false;
+		} else throw new Exception(self::$conn->error);
 	}
 
 	/**
 	 * Set secret key
 	 *
 	 * @param string $a key
-	 * @return boolean
 	 */
 	public static function setSecret($secret) {
-		return self::initConn()->query("UPDATE `user` SET `secret_key` = '" . Google2FACrypt::encrypt($secret) . "' WHERE `id` =" . self::$user_id . ";");
+		if (!self::initConn()->query("UPDATE `user` SET `secret_key` = '" . Google2FACrypt::encrypt($secret) . "' WHERE `id` =" . self::$user_id . ";"))
+			throw new Exception(self::$conn->error);
 	}
 
 	/**
@@ -108,48 +107,46 @@ class Google2FAData {
                         $activate = $result->fetch_object()->activate;
                         $result->close();
                         return ($activate == 1);
-                }
-                return false;
+                } else throw new Exception(self::$conn->error);
 	}
 
 	/**
 	 * Activate or deactivate two-factor authentication
 	 *
-	 * @param boolean $activate activation true/false
-	 * @return boolean
+	 * @param boolean $activate true/false
 	 */
 	public static function setActivate($activate) {
-		return self::initConn()->query("UPDATE `user` SET `activate` = " . ($activate ? "1" : "0") . " WHERE `id` =" . self::$user_id . ";");
+		if (!self::initConn()->query("UPDATE `user` SET `activate` = " . ($activate ? "1" : "0") . " WHERE `id` =" . self::$user_id . ";"))
+			throw new Exception(self::$conn->error);
 	}
 
         /**
          * Get type of cryption
          *
-         * @return string or false
+         * @return string
          */
 	public static function getCryption() {
 		if ($result = self::initConn()->query("SELECT `encryption` FROM `user` WHERE `id` =" . self::$user_id . " LIMIT 1;")) {
                         $encryption = $result->fetch_object()->encryption;
                         $result->close();
                         return $encryption;
-                }
-                return false;
+                } throw new Exception(self::$conn->error);
 	}
 
 	/**
 	 * Set type of cryption
 	 *
 	 * @param string $crypt type of cryption
-	 * @return boolean
 	 */
 	public static function setCryption($crypt) {
-                return self::initConn()->query("UPDATE `user` SET `encryption` = '" . $crypt . "' WHERE `id` =" . self::$user_id . ";");
+                if (!self::initConn()->query("UPDATE `user` SET `encryption` = '" . $crypt . "' WHERE `id` =" . self::$user_id . ";"))
+			throw new Exception(self::$conn->error);	
 	}
 
 	/**
 	 * Get used codes
 	 *
-	 * @return array or false
+	 * @return array
 	 */
 	public static function getUsedCodes() {
 		$codes = array();
@@ -159,35 +156,33 @@ class Google2FAData {
 			}
                         $result->close();
 			return $codes;
-                }
-		return false;
+                } else throw new Exception(self::$conn->error);
 	}
 
 	/**
 	 * Add a used code
 	 *
 	 * @param string $code used code
-	 * @return boolean
 	 */
 	public static function addUsedCode($code) {
-		if (self::initConn()->query("DELETE FROM `used_codes` WHERE `user_id` =" . self::$user_id . " AND `created` < DATE_SUB(now(), interval 15 Minute);"))
-			return self::$conn->query("INSERT INTO `used_codes` (`user_id` ,`code`) VALUES (" . self::$user_id . ", '" . Google2FACrypt::encrypt($code)  . "');");
-		return false;
+		if (!self::initConn()->query("DELETE FROM `used_codes` WHERE `user_id` =" . self::$user_id . " AND `created` < DATE_SUB(now(), interval 15 Minute);"))
+			throw new Exception(self::$conn->error);
+		if (!self::$conn->query("INSERT INTO `used_codes` (`user_id` ,`code`) VALUES (" . self::$user_id . ", '" . Google2FACrypt::encrypt($code)  . "');"))
+			throw new Exception(self::$conn->error);
 	}
 
 	/**
 	 * Delete used codes
-	 *
-	 * @return boolean
 	 */
 	public static function delUsedCodes() {
-		return self::initConn()->query("DELETE FROM `used_codes` WHERE `user_id` =" . self::$user_id . ";");
+		if (!self::initConn()->query("DELETE FROM `used_codes` WHERE `user_id` =" . self::$user_id . ";"))
+			throw new Exception(self::$conn->error);
         }
 
 	/**
 	 * Get timeless codes
 	 *
-	 * @return array or false
+	 * @return array
 	 */
         public static function getTimelessCodes() {
 
@@ -198,25 +193,23 @@ class Google2FAData {
                         }
                         $result->close();
 			return $codes;
-                }
-                return false;
+                } else throw new Exception(self::$conn->error);
         }
 
 	/**
 	 * Remove a used timeless code
 	 *
 	 * @param string $code code
-	 * @return boolean
 	 */
 	public static function rmTimelessCode($code) {
-		return self::initConn()->query("DELETE FROM `timeless_codes` WHERE `user_id` =" . self::$user_id . " AND `code` = '" . Google2FACrypt::encrypt($code) . "' LIMIT 1;");
+		if (!self::initConn()->query("DELETE FROM `timeless_codes` WHERE `user_id` =" . self::$user_id . " AND `code` = '" . Google2FACrypt::encrypt($code) . "' LIMIT 1;"))
+			throw new Exception(self::$conn->error);
 	}
 
 	/**
 	 * Set timeless codes
 	 *
 	 * @param array $codes timeless codes
-	 * @return boolean
 	 */
 	public static function setTimelessCodes($codes) {
 		if ($result = self::initConn()->query("DELETE FROM `timeless_codes` WHERE `user_id` =" . self::$user_id . ";")) {
@@ -224,8 +217,7 @@ class Google2FAData {
 				if (!self::$conn->query("INSERT INTO `timeless_codes` (`user_id` ,`code`) VALUES (" . self::$user_id . ", '" . Google2FACrypt::encrypt($code)  . "');"))
 					return false;
 			}
-		}
-		return $result;
+		} else throw new Exception(self::$conn->error);
 	}
 }
 

@@ -42,27 +42,36 @@ class Google2FAModule extends Module {
 		$result = false;
 		foreach($this->data as $actionType => $actionData) {
 			if(isset($actionType)) {
-				switch($actionType) {
-					case "resetconfiguration":
-						$result = $this->resetConfiguration();
-						break;
-					case "getsecret":
-						$result = $this->getSecret();
-						break;
-					case "activate":
-						$result = $this->activate();
-						break;
-					case "isactivated":
-						$result = $this->isActivated();
-						break;
-					case "verifycode":
-						$result = $this->verifyCode($actionData);
-						break;
-					case "gettimelesscodes":
-						$result = $this->getTimelessCodes($actionData);
-						break;
-					default:
-						$this->handleUnknownActionType($actionType);
+				try {
+					switch($actionType) {
+						case "resetconfiguration":
+							$result = $this->resetConfiguration();
+							break;
+						case "getsecret":
+							$result = $this->getSecret();
+							break;
+						case "activate":
+							$result = $this->activate();
+							break;
+						case "isactivated":
+							$result = $this->isActivated();
+							break;
+						case "verifycode":
+							$result = $this->verifyCode($actionData);
+							break;
+						case "gettimelesscodes":
+							$result = $this->getTimelessCodes($actionData);
+							break;
+						default:
+							$this->handleUnknownActionType($actionType);
+					}
+				} catch (Exception $e) {
+					$mess = $e->getFile() . ":" . $e->getLine() . "<br />" . $e->getMessage();
+					error_log("[google2fa]: " . $mess);
+					$this->sendFeedback(false, array(
+						'type' => ERROR_GENERAL,
+						'info' => array('original_message' => $mess, 'display_message' => $mess)
+		              		));
 				}
 			}
 		}
@@ -115,6 +124,7 @@ class Google2FAModule extends Module {
 		$response['isActivated'] = $isActivated;
 		$this->addActionData("isactivated", $response);
 		$GLOBALS["bus"]->addData($this->getResponseData());
+		return true;
         }
 
         /**
@@ -144,18 +154,14 @@ class Google2FAModule extends Module {
 	private function getTimelessCodes($actionData) {
 		$generate = $actionData['generate'];
 		$codes = Google2FAData::getTimelessCodes();
-		if ($codes !== false) {
-			if ($generate || count($codes) === 0 || $codes[0] === "") {
-				$codes = array();
-				for ($i=0; $i<PLUGIN_GOOGLE2FA_TCODES; $i++)
-					array_push($codes, mt_rand(100000, 999999));
-				Google2FAData::setTimelessCodes($codes);
-			}
-			foreach ($codes as &$code)
-				$code = base64_encode($code);
-		} else {
+		if ($generate || count($codes) === 0 || $codes[0] === "") {
 			$codes = array();
+			for ($i=0; $i<PLUGIN_GOOGLE2FA_TCODES; $i++)
+				array_push($codes, mt_rand(100000, 999999));
+			Google2FAData::setTimelessCodes($codes);
 		}
+		foreach ($codes as &$code)
+			$code = base64_encode($code);
 		$response = array();
 		$response['codes'] = $codes;
 		$this->addActionData("gettimelesscodes", $response);
@@ -173,18 +179,13 @@ class Google2FAModule extends Module {
 		$secret = Google2FAData::getSecret();
 		$user = $_SESSION["username"];
 		$response = array();
-		if ($secret !== false) {
-			if ($secret === "")
-				$secret = $this->createSecret();
-			if (PLUGIN_GOOGLE2FA_GENERATEQR === true)
-				$response['qRCodeGoogleUrl'] = base64_encode("plugins/google2fa/php/qr.php");
-			else
-				$response['qRCodeGoogleUrl'] = base64_encode($this->ga->getQRCodeGoogleUrl($user . "@" . PLUGIN_GOOGLE2FA_APPNAME, $secret, PLUGIN_GOOGLE2FA_APPNAME));
-			$response['secret'] = base64_encode($secret);
-		} else {
-			$response['qRCodeGoogleUrl'] = "";
-			$response['secret'] = "";
-		}
+		if ($secret === "")
+			$secret = $this->createSecret();
+		if (PLUGIN_GOOGLE2FA_GENERATEQR === true)
+			$response['qRCodeGoogleUrl'] = base64_encode("plugins/google2fa/php/qr.php");
+		else
+			$response['qRCodeGoogleUrl'] = base64_encode($this->ga->getQRCodeGoogleUrl($user . "@" . PLUGIN_GOOGLE2FA_APPNAME, $secret, PLUGIN_GOOGLE2FA_APPNAME));
+		$response['secret'] = base64_encode($secret);
 		$response['application'] = PLUGIN_GOOGLE2FA_APPNAME;
 		$response['username'] = $user;
 		$this->addActionData("getsecret", $response);
