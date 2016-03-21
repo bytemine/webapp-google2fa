@@ -233,7 +233,7 @@ Zarafa.plugins.google2fa.settings.SettingsGoogle2FAWidget = Ext.extend(Zarafa.se
 	{
 		Zarafa.plugins.google2fa.data.Configuration.gotIsActivated(a);
 		this.status.setValue(this.getStatus());
-		container.getNotifier().notify("info.files", dgettext("plugin_google2fa", "Two-factor authentication") + ": " + this.getStatus(), 
+		container.getNotifier().notify("info.saved", dgettext("plugin_google2fa", "Two-factor authentication") + ": " + this.getStatus(), 
 			dgettext("plugin_google2fa", "Current status") + ": " + this.getStatus())
 	}
 });
