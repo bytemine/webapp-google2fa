@@ -6,3 +6,45 @@ https://community.zarafa.com/pg/plugins/project/32087/developer/norman/google2fa
 
 Code Repository:
 https://bitbucket.org/normanth/google2fa
+
+
+Tested on: WebApp 2.0.2 - ZCP 7.1.11
+
+Release notes:
+
+0.3.1
+- add notification on activation/deactivation
+- deactivate qr code cache
+- optimizing error handling
+
+0.3
+- Generation of QR Code on own server (default is generation with Google)
+- MYSQL support (default is WebApp settings)
+- Whitelist with subnets to login without 2FA
+- Configuration of 2FA activation with config.php
+- Bugfix: wrong MCRYPT parameter on Linux
+- Small bugfixes
+- Documentation: Configuration for a company with cental administration
+
+0.2.4
+- New language file added (Dutch) / Neue Sprachdatei hinzugefügt (Niederländisch)
+
+0.2.3
+- Security: MCrypt support for storing secret key and codes (see config.php) / Sicherheit: MCrypt Unterstützung für die Speicherung des geheimen Schlüssels und der geheimen Codes (siehe config.php)
+- Lock icon in the settings / Schloss-Icon in den Einstellungen
+
+0.2.2
+- Fix: Language files updated (English/German) / Sprachdateien aktualisiert (englisch/deutsch)
+- New language file added (French) / Neue Sprachdatei hinzugefügt (französisch)
+
+0.2.1
+- Fix: If no time-independent codes have been generated, a login with an empty code is possible. / Wenn keine zeitunabhängigen Codes generiert wurden, ist ein Login mit leerem Code möglich.
+- Fix: If secret key doesn't exist because time-independent codes should be used, the plugin doesn't ask for a code. / Wenn die Konfiguration nicht vorgenommen wurde. / kein geheimer Schlüssel erzeugt wurde, weil alleine die zeitunabhängigen Codes verwendet werden sollen, erscheint trotz aktivierter Authentifizierung keine Code-Abfrage.
+
+0.2
+- Multilingual (currently English and German)
+- User-oriented configuration; prepared for administrator configuration
+- Prepared for using DB or LDAP
+- Configure the authenticator App via QR code or manually
+- A code can only be used on-time
+- Support for time-independent single-use emergency codes
