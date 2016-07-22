@@ -1,4 +1,4 @@
-<?
+<?php
 /**
  * PHP file that presents itself as a QR Code with the 2FA information of the user
  *
@@ -20,7 +20,7 @@
 	require "external/phpqrcode/qrlib.php";
 
 	$url = "otpauth://totp/" . PLUGIN_GOOGLE2FA_APPNAME . ":" . $_SESSION['username'] . "@" . PLUGIN_GOOGLE2FA_APPNAME .
-		"?secret=" . Google2FAData::getSecret() . "&issuer=" . PLUGIN_GOOGLE2FA_APPNAME;
+                "?secret=" . base64_decode($_SESSION['PLUGIN_GOOGLE2FA_SECRET']) . "&issuer=" . PLUGIN_GOOGLE2FA_APPNAME;
 
 	QRcode::png($url, false, QR_ECLEVEL_L, 5, 0);
 
