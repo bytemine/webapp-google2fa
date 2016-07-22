@@ -12,6 +12,9 @@ Tested on: WebApp 2.0.2 - ZCP 7.1.11
 
 Release notes:
 
+0.3.2
+- Fix: problem with QRCode generation on server if WebApp-Settings
+
 0.3.1
 - add notification on activation/deactivation
 - deactivate qr code cache
