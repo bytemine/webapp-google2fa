@@ -8,9 +8,10 @@
  * @license http://www.gnu.org/licenses/ GNU Affero General Public License
  * @link http://www.familiethimm.de/
  */
-
+	include("../../../init.php");
         include("../../../config.php");
 	include("external/GoogleAuthenticator/GoogleAuthenticator.php");
+	include("../../../server/includes/core/class.encryptionstore.php");
 
         session_name(COOKIE_NAME);
         session_start();
@@ -31,12 +32,13 @@
 	}
 
 	if ($verification) {
-		$_SESSION['username'] = $_SESSION['google2FAUsername'];
-		$_SESSION['password'] = $_SESSION['google2FAPassword'];
+		$encryptionStore = EncryptionStore::getInstance();
+		$encryptionStore->add('username', $_SESSION['google2FAUsername']);
+		$encryptionStore->add('password', $_SESSION['google2FAPassword']);
 		$_SESSION['google2FACode'] = $code; // to disable code 
 		$_SESSION['google2FALoggedOn'] = TRUE; // 2FA successful
-
 		header('Location: ../../../index.php', true, 303);
+
 	} else {
 		$_SESSION['google2FALoggedOn'] = FALSE; // login not successful
 		header('Location: login.php', true, 303);
