@@ -8,9 +8,12 @@ Code Repository:
 https://bitbucket.org/normanth/google2fa
 
 
-Tested on: WebApp 2.0.2 - ZCP 7.1.11
+Tested on: WebApp 2.2.0 - ZCP 7.2.4
 
 Release notes:
+
+0.4.0
+- adapt authentication to work with WebApp > 2.1
 
 0.3.2
 - Fix: problem with QRCode generation on server if WebApp-Settings

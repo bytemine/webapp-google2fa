@@ -2,10 +2,10 @@
 <!DOCTYPE plugin SYSTEM "manifest.dtd">
 <plugin version="2">
 	<info>
-		<version>0.3.2</version>
+		<version>0.4.0</version>
 		<name>google2fa</name>
 		<title>Two-factor authentication</title>
-		<author>Norman Thimm</author>
+		<author>Norman Thimm, Daniel Rauer</author>
 		<authorURL>http://www.familiethimm.de</authorURL>
 		<description>Plugin to support two-factor authentication with Google Authenticator</description>
 	</info>
@@ -20,7 +20,7 @@
 			<info>
 				<name>google2faplugin</name>
 				<title>Google2FAPlugin</title>
-				<author>Norman Thimm</author>
+				<author>Norman Thimm, Daniel Rauer</author>
 				<description>Two-factor authentication</description>
 			</info>
 			<files>
