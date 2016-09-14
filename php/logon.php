@@ -37,6 +37,8 @@
 		$encryptionStore->add('password', $_SESSION['google2FAPassword']);
 		$_SESSION['google2FACode'] = $code; // to disable code 
 		$_SESSION['google2FALoggedOn'] = TRUE; // 2FA successful
+		$_SESSION['fingerprint'] = $_SESSION['google2FAFingerprint'];
+		$_SESSION['frontend-fingerprint'] = $_SESSION['google2FAFrontendFingerprint'];
 		header('Location: ../../../index.php', true, 303);
 
 	} else {

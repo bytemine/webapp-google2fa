@@ -74,7 +74,6 @@
 			}
 			window.onload = onLoad;
 		</script>
-<script type="text/javascript" src="../../../client/fingerprint.js" ></script>
 	</head>
 
 	<body class="login">

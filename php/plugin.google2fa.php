@@ -88,10 +88,11 @@ class PluginGoogle2FA extends Plugin {
 					$username = $encryptionStore->get('username');
 					$password = $encryptionStore->get('password');
 					$fingerprint = $_SESSION['fingerprint'];
+					$frontendFingerprint = $_SESSION['frontend-fingerprint'];
 
 					$encryptionStore->add('username', '');
 					$encryptionStore->add('password', '');
-					
+
 					$_SESSION = array(); // clear session to logoff and don't loose session
 					
 					$_SESSION['google2FAUsername'] = $username; // or from $_POST/$GLOBALS
@@ -103,7 +104,8 @@ class PluginGoogle2FA extends Plugin {
 					$_SESSION['google2FAEcho']['txtCodePlaceholder'] = dgettext('plugin_google2fa', 'Code');
 					$_SESSION['google2FAEcho']['msgInvalidCode'] = dgettext('plugin_google2fa', 'Invalid code. Please check code.');
 					$_SESSION['google2FAEcho']['butLogin'] = dgettext('plugin_google2fa', 'Login');
-					$_SESSION['fingerprint'] = $fingerprint;
+					$_SESSION['google2FAFingerprint'] = $fingerprint;
+					$_SESSION['google2FAFrontendFingerprint'] = $frontendFingerprint;
 
 					header('Location: plugins/google2fa/php/login.php', true, 303); // delete GLOBALS, go to token page
 					exit; // don't execute header-function in index.php
