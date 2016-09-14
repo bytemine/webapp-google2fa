@@ -8,7 +8,7 @@ require "class.google2fadata." . PLUGIN_GOOGLE2FA_DATABASE . ".php";
  *
  * @class PluginGoogle2FA
  * @extends Plugin
- * @author Norman Thimm
+ * @author Norman Thimm, Daniel Rauer
  * @copyright 2015 Norman Thimm
  * @license http://www.gnu.org/licenses/ GNU Affero General Public License
  * @link http://www.familiethimm.de/

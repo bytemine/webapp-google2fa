@@ -4,7 +4,7 @@
  * PHP file check code from two-factor authentication login page (login.php)
  *
  * @author Norman Thimm
- * @copyright 2015 Norman Thimm
+ * @copyright 2015 Norman Thimm, Daniel Rauer
  * @license http://www.gnu.org/licenses/ GNU Affero General Public License
  * @link http://www.familiethimm.de/
  */
