@@ -177,7 +177,8 @@ class Google2FAModule extends Module {
 	 */
 	private function getSecret() {
 		$secret = Google2FAData::getSecret();
-		$user = $_SESSION["username"];
+		$encryptionStore = EncryptionStore::getInstance();
+		$user = $encryptionStore->get('username');
 		$response = array();
 		if ($secret === "")
 			$secret = $this->createSecret();
