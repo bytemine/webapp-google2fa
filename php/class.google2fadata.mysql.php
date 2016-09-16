@@ -57,12 +57,14 @@ class Google2FAData {
 					throw new Exception(self::$conn->error);
 			}
 
+			$encryptionStore = EncryptionStore::getInstance();
+			$username = $encryptionStore->get('username');
 			// Get user_id - insert user if he/she doesn't exists
-			if ($result = self::$conn->query("SELECT `id` FROM `user` WHERE `username` LIKE '" . $_SESSION['username'] . "' LIMIT 0 , 1;")) {
+			if ($result = self::$conn->query("SELECT `id` FROM `user` WHERE `username` LIKE '" . $username . "' LIMIT 0 , 1;")) {
 				if ($result->num_rows == 1) {
 					self::$user_id = $result->fetch_object()->id;
 				} else if ($result->num_rows == 0) {
-					if (!self::$conn->query("INSERT INTO `user` (`username`) VALUES ('" . $_SESSION['username'] . "');"))
+					if (!self::$conn->query("INSERT INTO `user` (`username`) VALUES ('" . $username . "');"))
 						die ("MySQL error: can't create user");
 					self::$user_id = self::$conn->insert_id;
 				}

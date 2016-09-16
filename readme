@@ -8,9 +8,14 @@ Code Repository:
 https://bitbucket.org/normanth/google2fa
 
 
-Tested on: WebApp 2.2.0 - ZCP 7.2.4
+Tested on: WebApp 2.2.1 - ZCP 7.2.4
 
 Release notes:
+
+0.4.1
+- Retrieve username from EncryptionStore instead from session in QR code and MySQL handler
+- CSS location for login page has changed only for v2.2.0, consider that in stylesheet link
+- Retrieve the username from encryptionStore to display in configuration wizard
 
 0.4.0
 - adapt authentication to work with WebApp > 2.1
