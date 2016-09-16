@@ -19,7 +19,9 @@
 
 	require "external/phpqrcode/qrlib.php";
 
-	$url = "otpauth://totp/" . PLUGIN_GOOGLE2FA_APPNAME . ":" . $_SESSION['username'] . "@" . PLUGIN_GOOGLE2FA_APPNAME .
+	$encryptionStore = EncryptionStore::getInstance();
+	$username = $encryptionStore->get('username');
+	$url = "otpauth://totp/" . PLUGIN_GOOGLE2FA_APPNAME . ":" . $username . "@" . PLUGIN_GOOGLE2FA_APPNAME .
                 "?secret=" . base64_decode($_SESSION['PLUGIN_GOOGLE2FA_SECRET']) . "&issuer=" . PLUGIN_GOOGLE2FA_APPNAME;
 
 	QRcode::png($url, false, QR_ECLEVEL_L, 5, 0);
