@@ -24,10 +24,10 @@
 		<!--link rel="apple-touch-icon" href="/apple-touch-icon.png"-->
 		<link rel="icon" href="../../../<?php echo $favicon ?>" type="image/x-icon">
 		<link rel="shortcut icon" href="../../../<?php echo $favicon ?>" type="image/x-icon">
-		<?php if(strpos(file_get_contents('../../../version'), '2.2.0') === 0) { ?>
-		<link rel="stylesheet" type="text/css" href="../../../client/resources/design2015/css/external/login.css">
+		<?php if (file_exists("../../../client/resources/design2015/css/external/login.css")) { ?>
+			 <link rel="stylesheet" type="text/css" href="../../../client/resources/design2015/css/external/login.css">
 		<?php } else { ?>
-		<link rel="stylesheet" type="text/css" href="../../../client/resources/css/external/login.css">
+			 <link rel="stylesheet" type="text/css" href="../../../client/resources/css/external/login.css">
 		<?php } ?>
 
 		<script>
