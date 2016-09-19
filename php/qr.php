@@ -18,11 +18,8 @@
 	require "class.google2fadata." . PLUGIN_GOOGLE2FA_DATABASE . ".php";
 
 	require "external/phpqrcode/qrlib.php";
-
-	$encryptionStore = EncryptionStore::getInstance();
-	$username = $encryptionStore->get('username');
-	$url = "otpauth://totp/" . PLUGIN_GOOGLE2FA_APPNAME . ":" . $username . "@" . PLUGIN_GOOGLE2FA_APPNAME .
-                "?secret=" . base64_decode($_SESSION['PLUGIN_GOOGLE2FA_SECRET']) . "&issuer=" . PLUGIN_GOOGLE2FA_APPNAME;
+	$url = "otpauth://totp/" . PLUGIN_GOOGLE2FA_APPNAME . ":" . $_SESSION['google2FAUsername'] . "@" . PLUGIN_GOOGLE2FA_APPNAME .
+                "?secret=" . $_SESSION['google2FASecret'] . "&issuer=" . PLUGIN_GOOGLE2FA_APPNAME;
 
 	QRcode::png($url, false, QR_ECLEVEL_L, 5, 0);
 
