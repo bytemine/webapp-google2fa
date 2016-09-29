@@ -209,7 +209,8 @@ Zarafa.plugins.google2fa.settings.SettingsGoogle2FAWidget = Ext.extend(Zarafa.se
                                 msg: dgettext("plugin_google2fa", "Valid code, you can use the two-factor authentication."),
                                 icon: Zarafa.common.dialogs.MessageBox.INFO,
                                 buttons: Zarafa.common.dialogs.MessageBox.OK,
-                                scope: this
+                                scope: this,
+				width: 350
                         })
 		} else {
 			Zarafa.common.dialogs.MessageBox.show({
@@ -219,7 +220,8 @@ Zarafa.plugins.google2fa.settings.SettingsGoogle2FAWidget = Ext.extend(Zarafa.se
 					dgettext("plugin_google2fa", "Please make sure that time from of server and second device are correct."),
 				icon: Zarafa.common.dialogs.MessageBox.ERROR,
 				buttons: Zarafa.common.dialogs.MessageBox.OK,
-				scope: this
+				scope: this,
+				width: 350
 			})
 		}
 	},
