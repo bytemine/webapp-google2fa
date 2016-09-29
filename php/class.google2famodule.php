@@ -183,9 +183,9 @@ class Google2FAModule extends Module {
 		if ($secret === "")
 			$secret = $this->createSecret();
 		if (PLUGIN_GOOGLE2FA_GENERATEQR === true) {
-			$response['qRCodeGoogleUrl'] = base64_encode("plugins/google2fa/php/qr.php");
 			session_start();
 			$_SESSION['PLUGIN_GOOGLE2FA_SECRET'] = base64_encode($secret); // for qr.php - no transfer to client
+                       $response['qRCodeGoogleUrl'] = base64_encode("plugins/google2fa/php/qr.php");
 		} else
 			$response['qRCodeGoogleUrl'] = base64_encode($this->ga->getQRCodeGoogleUrl($user . "@" . PLUGIN_GOOGLE2FA_APPNAME, $secret, PLUGIN_GOOGLE2FA_APPNAME));
 		$response['secret'] = base64_encode($secret);
