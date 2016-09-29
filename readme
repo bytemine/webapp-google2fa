@@ -12,6 +12,11 @@ Tested on: WebApp 2.2.1 - ZCP 7.2.4
 
 Release notes:
 
+0.4.3
+- Set proper width of code verification response dialog.
+- Generate secret before the QR code is rendered locally.
+- If the user logs in without having 2FA enabled the QR code generation needs to retrieve username and secret from different session variables.
+
 0.4.2
 - Fix QR generation code.
 - Check CSS file location by file_exists, not by version number.
