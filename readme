@@ -8,9 +8,14 @@ Code Repository:
 https://bitbucket.org/normanth/google2fa
 
 
-Tested on: WebApp 2.2.1 - ZCP 7.2.4
+Tested on:
+- Zarafa WebApp 2.2.1 - ZCP 7.2.4
+- Kopano WebApp 3.1.0 - Kopano Core 8.1.0
 
 Release notes:
+
+0.4.4
+- Adjust a parent constructor call to be compatible with Zarafa WebApp and Kopano WebApp.
 
 0.4.3
 - Set proper width of code verification response dialog.
