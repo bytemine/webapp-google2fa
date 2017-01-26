@@ -8,13 +8,13 @@
  * @license http://www.gnu.org/licenses/ GNU Affero General Public License
  * @link http://www.familiethimm.de/
  */
-	include("../../../init.php");
-        include("../../../config.php");
-	include("external/GoogleAuthenticator/GoogleAuthenticator.php");
-	include("../../../server/includes/core/class.encryptionstore.php");
+	require_once("../../../init.php");
+	require_once(BASE_PATH . "config.php");
+	require_once("external/GoogleAuthenticator/GoogleAuthenticator.php");
+	require_once(BASE_PATH . "server/includes/core/class.encryptionstore.php");
 
-        session_name(COOKIE_NAME);
-        session_start();
+	// Make sure the php session is started
+	WebAppSession::getInstance();
 
 	$code = ($_POST && array_key_exists('token', $_POST)) ? $_POST['token'] : '';
 	$secret = $_SESSION['google2FASecret'];
@@ -33,12 +33,12 @@
 
 	if ($verification) {
 		$encryptionStore = EncryptionStore::getInstance();
-		$encryptionStore->add('username', $_SESSION['google2FAUsername']);
-		$encryptionStore->add('password', $_SESSION['google2FAPassword']);
-		$_SESSION['google2FACode'] = $code; // to disable code 
+		$username = $encryptionStore->get('google2FAUsername');
+		$password = $encryptionStore->get('google2FAPassword');
+		$encryptionStore->add('username', $username);
+		$encryptionStore->add('password', $password);
+		$_SESSION['google2FACode'] = $code; // to disable code
 		$_SESSION['google2FALoggedOn'] = TRUE; // 2FA successful
-		$_SESSION['fingerprint'] = $_SESSION['google2FAFingerprint'];
-		$_SESSION['frontend-fingerprint'] = $_SESSION['google2FAFrontendFingerprint'];
 		header('Location: ../../../index.php', true, 303);
 
 	} else {
