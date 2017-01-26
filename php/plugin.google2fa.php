@@ -16,12 +16,6 @@ require "class.google2fadata." . PLUGIN_GOOGLE2FA_DATABASE . ".php";
 class PluginGoogle2FA extends Plugin {
 
 	/**
-	 * Constructor
-	 */
-	function PluginGoogle2FA() {
-	}
-
-	/**
 	 * Function initializes the Plugin and registers all hooks
 	 */
 	function init() {
