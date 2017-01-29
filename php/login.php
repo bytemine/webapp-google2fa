@@ -1,8 +1,12 @@
 <?php
-	include("../../../config.php");
+	require_once("../../../init.php");
+	require_once(BASE_PATH . "config.php");
+	require_once(BASE_PATH . "server/includes/core/class.webappsession.php");
 	$webappTitle = defined('WEBAPP_TITLE') && WEBAPP_TITLE ? WEBAPP_TITLE : 'WebApp';
-	session_name(COOKIE_NAME);
-	session_start();
+
+	// Make sure the php session is started
+	WebAppSession::getInstance();
+
 	$error = (isset($_SESSION['google2FALoggedOn']) && !$_SESSION['google2FALoggedOn']) ? TRUE : FALSE;
 ?>
 
@@ -131,7 +135,7 @@
 				}
 				// Adding this class will show the loader
 				cntEl.className += ' loading';
-				// Call onResize, because an error message might have enlarged the login box, 
+				// Call onResize, because an error message might have enlarged the login box,
 				// so it is out of position.
 				onResize();
 				firstSubmit = false;
