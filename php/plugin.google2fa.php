@@ -31,82 +31,86 @@ class PluginGoogle2FA extends Plugin {
 	 */
 	function execute($eventID, &$data) {
 		switch($eventID) {
-			case 'server.core.settings.init.before' :
+                        case 'server.core.settings.init.before' :
 
-				$this->injectPluginSettings($data);
-				break;
+                                $this->injectPluginSettings($data);
+                                break;
 
 			case 'server.index.load.main.before' : // don't use the logon trigger because we need the settings
 
-			try {
+				try {
 
-				if (PLUGIN_GOOGLE2FA_ALWAYS_ENABLED) {
-					$GLOBALS["settings"]->set('zarafa/v1/plugins/google2fa/enable', true);
-					$GLOBALS["settings"]->saveSettings();
-				}
-
-				if (PLUGIN_GOOGLE2FA_ALWAYS_ACTIVATED)
-					Google2FAData::setActivate(true);
-
-				// Check, if user has enabled plugin and has activated 2FA
-				if (!$GLOBALS["settings"]->get('zarafa/v1/plugins/google2fa/enable')
-					|| !Google2FAData::isActivated())
-					break;
-
-				// Check, if Client-IP is in Whitelist
-				if (PLUGIN_GOOGLE2FA_WHITELIST !== "") {
-					foreach (explode (",", PLUGIN_GOOGLE2FA_WHITELIST) as $range) {
-						if (self::ip_in_range($_SERVER['REMOTE_ADDR'], $range))
-							break 2;
+					if (PLUGIN_GOOGLE2FA_ALWAYS_ENABLED) {
+						$GLOBALS["settings"]->set('zarafa/v1/plugins/google2fa/enable', true);
+						$GLOBALS["settings"]->saveSettings();
 					}
-				}
 
-				// Check, if token authorisation is already done (example: attachment-upload)
-				if (array_key_exists('google2FALoggedOn', $_SESSION) && $_SESSION['google2FALoggedOn']) {
+					if (PLUGIN_GOOGLE2FA_ALWAYS_ACTIVATED)
+						Google2FAData::setActivate(true);
 
-					// Login successful - save or remove code
-					if (isset($_SESSION['google2FACode'])) {
-						if (isset($_SESSION['google2FACodeTimeless'])) {
-							Google2FAData::rmTimelessCode($_SESSION['google2FACode']);
-							unset($_SESSION['google2FACodeTimeless']);
-						} else {
-							Google2FAData::addUsedCode($_SESSION['google2FACode']);
+					// Check, if user has enabled plugin and has activated 2FA
+					if (!$GLOBALS["settings"]->get('zarafa/v1/plugins/google2fa/enable')
+						|| !Google2FAData::isActivated())
+						break;
+
+					// Check, if Client-IP is in Whitelist
+					if (PLUGIN_GOOGLE2FA_WHITELIST !== "") {
+						foreach (explode (",", PLUGIN_GOOGLE2FA_WHITELIST) as $range) {
+							if (self::ip_in_range($_SERVER['REMOTE_ADDR'], $range))
+								break 2;
 						}
-						unset($_SESSION['google2FACode']);
 					}
-					break;
+
+					// Check, if token authorisation is already done (example: attachment-upload)
+					if (array_key_exists('google2FALoggedOn', $_SESSION) && $_SESSION['google2FALoggedOn']) {
+
+						// Login successful - save or remove code
+						if (isset($_SESSION['google2FACode'])) {
+							if (isset($_SESSION['google2FACodeTimeless'])) {
+								Google2FAData::rmTimelessCode($_SESSION['google2FACode']);
+								unset($_SESSION['google2FACodeTimeless']);
+							} else {
+								Google2FAData::addUsedCode($_SESSION['google2FACode']);
+							}
+							unset($_SESSION['google2FACode']);
+						}
+						break;
+					}
+
+					// Token needed - logoff, remember credentials for later logon with logon.php/login.php and load token-page
+					$encryptionStore = EncryptionStore::getInstance();
+					// store credentials in temporary session, and remove from encryptionStore
+					$username = $encryptionStore->get('username');
+					$password = $encryptionStore->get('password');
+					$fingerprint = $_SESSION['fingerprint'];
+					$frontendFingerprint = $_SESSION['frontend-fingerprint'];
+
+					$encryptionStore->add('username', '');
+					$encryptionStore->add('password', '');
+
+					$_SESSION = array(); // clear session to logoff and don't loose session
+
+					$_SESSION['google2FAUsername'] = $username; // or from $_POST/$GLOBALS
+					$_SESSION['google2FAPassword'] = $password;
+					$_SESSION['google2FASecret'] = Google2FAData::getSecret();
+					$_SESSION['google2FAUsedCodes'] = Google2FAData::getUsedCodes();
+					$_SESSION['google2FATimelessCodes'] = Google2FAData::getTimelessCodes();
+					$_SESSION['google2FAEcho']['boxTitle'] = dgettext('plugin_google2fa', 'Please enter code');
+					$_SESSION['google2FAEcho']['txtCodePlaceholder'] = dgettext('plugin_google2fa', 'Code');
+					$_SESSION['google2FAEcho']['msgInvalidCode'] = dgettext('plugin_google2fa', 'Invalid code. Please check code.');
+					$_SESSION['google2FAEcho']['butLogin'] = dgettext('plugin_google2fa', 'Login');
+					$_SESSION['google2FAFingerprint'] = $fingerprint;
+					$_SESSION['google2FAFrontendFingerprint'] = $frontendFingerprint;
+
+					header('Location: plugins/google2fa/php/login.php', true, 303); // delete GLOBALS, go to token page
+					exit; // don't execute header-function in index.php
+
+				} catch (Exception $e) {
+					$mess = $e->getFile() . ":" . $e->getLine() . "<br />" . $e->getMessage();
+					error_log("[google2fa]: " . $mess);
+                                        die($mess);
 				}
-
-				// Token needed - logoff, remember credentials for later logon with logon.php/login.php and load token-page
-				$encryptionStore = EncryptionStore::getInstance();
-
-				// store credentials in temporary session variable, and remove from encryptionStore
-				$username = $encryptionStore->get('username');
-				$password = $encryptionStore->get('password');
-
-				$encryptionStore->add('google2FAUsername', $username);
-				$encryptionStore->add('google2FAPassword', $password);
-
-				$encryptionStore->add('username', '');
-				$encryptionStore->add('password', '');
-
-				$_SESSION['google2FASecret'] = Google2FAData::getSecret();
-				$_SESSION['google2FAUsedCodes'] = Google2FAData::getUsedCodes();
-				$_SESSION['google2FATimelessCodes'] = Google2FAData::getTimelessCodes();
-				$_SESSION['google2FAEcho']['boxTitle'] = dgettext('plugin_google2fa', 'Please enter code');
-				$_SESSION['google2FAEcho']['txtCodePlaceholder'] = dgettext('plugin_google2fa', 'Code');
-				$_SESSION['google2FAEcho']['msgInvalidCode'] = dgettext('plugin_google2fa', 'Invalid code. Please check code.');
-				$_SESSION['google2FAEcho']['butLogin'] = dgettext('plugin_google2fa', 'Login');
-
-				header('Location: plugins/google2fa/php/login.php', true, 303); // delete GLOBALS, go to token page
-				exit; // don't execute header-function in index.php
-
-			} catch (Exception $e) {
-				$mess = $e->getFile() . ":" . $e->getLine() . "<br />" . $e->getMessage();
-				error_log("[google2fa]: " . $mess);
-				die($mess);
-			}
-		}
+                }
 	}
 
 	/**
