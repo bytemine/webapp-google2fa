@@ -9,6 +9,28 @@
 	WebAppSession::getInstance();
 
 	$error = (isset($_SESSION['google2FALoggedOn']) && !$_SESSION['google2FALoggedOn']) ? TRUE : FALSE;
+
+	/*
+	 * Get the favicon either from theme or use the default.
+	 *
+	 * @param string theme the users theme
+	 * @return string favicon
+	 */
+	function getFavicon($theme)
+	{
+
+		if ( $theme ) {
+			$favicon = Theming::getFavicon($theme);
+		}
+
+		if ( !isset($favicon) || $favicon === false) {
+			$favicon = 'client/resources/images/favicon.ico?kv2.2.0';
+		}
+
+		return $favicon;
+	}
+
+	$favicon = getFavicon(Theming::getActiveTheme());
 ?>
 
 <!DOCTYPE html>
