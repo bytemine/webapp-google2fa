@@ -146,6 +146,7 @@ class PluginGoogle2FA extends Plugin {
 					'plugins' => Array(
 						'google2fa' => Array(
 							'enable' => PLUGIN_GOOGLE2FA_ENABLE,
+							'user_disable_allowed' => !PLUGIN_GOOGLE2FA_ALWAYS_ENABLED,
 							'enable_but_conf' => PLUGIN_GOOGLE2FA_ENBUTCONF,
 							'enable_but_activ' => PLUGIN_GOOGLE2FA_ENBUTACTIV,
 							'enable_but_tcodes' => PLUGIN_GOOGLE2FA_ENBUTTCODES,

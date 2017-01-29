@@ -10,7 +10,7 @@ Zarafa.plugins.google2fa.ABOUT = '<p>Copyright &copy; 2015 Norman Thimm &lt;norm
  * @license http://www.gnu.org/licenses/ GNU Affero General Public License
  * @link http://www.familiethimm.de/
  *
- * Plugin Google2FA 
+ * Plugin Google2FA
  */
 Zarafa.plugins.google2fa.Google2FA = Ext.extend(Zarafa.core.Plugin, {
 
@@ -23,7 +23,7 @@ Zarafa.plugins.google2fa.Google2FA = Ext.extend(Zarafa.core.Plugin, {
 		config = config || {};
 		Zarafa.plugins.google2fa.Google2FA.superclass.constructor.call(this, config)
 	},
-	
+
 	/**
 	 * Init plugin
 	 */
@@ -39,15 +39,19 @@ Zarafa.plugins.google2fa.Google2FA = Ext.extend(Zarafa.core.Plugin, {
 	 */
 	createSettingCategories: function() {
 		return {
-        		xtype: "Zarafa.plugins.google2fa.settingsgoogle2facategory"
+			xtype: "Zarafa.plugins.google2fa.settingsgoogle2facategory"
 		}
-    	}
+	}
 });
 
 Zarafa.onReady(function() {
+	var sm = container.getSettingsModel();
+	var allowUserDisable = sm.get('zarafa/v1/plugins/google2fa/user_disable_allowed');
+
 	container.registerPlugin(new Zarafa.core.PluginMetaData({
 		name : 'google2fa',
 		displayName : _('Google2FA Plugin'),
+		allowUserDisable : allowUserDisable,
 		about: Zarafa.plugins.google2fa.ABOUT,
 		pluginConstructor : Zarafa.plugins.google2fa.Google2FA
 	}));
