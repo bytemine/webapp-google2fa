@@ -1,6 +1,7 @@
 <?php
 	require_once("../../../init.php");
 	require_once(BASE_PATH . "config.php");
+	require_once(BASE_PATH . "server/includes/core/class.webappsession.php");
 	require_once(BASE_PATH . "server/includes/core/class.webappauthentication.php");
 	require_once(BASE_PATH . "server/includes/core/class.theming.php");
 	$webappTitle = defined('WEBAPP_TITLE') && WEBAPP_TITLE ? WEBAPP_TITLE : 'WebApp';
