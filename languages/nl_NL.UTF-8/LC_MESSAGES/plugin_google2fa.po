@@ -38,8 +38,8 @@ msgid "Configuration two-factor authentication"
 msgstr "Configuratie tweestapsauthenticatie"
 
 #: js/settings/SettingsGoogle2FAWidget.js:24
-msgid "The two-factor authentication provides an additional protection for the Zarafa WebApp."
-msgstr "Tweestapsauthenticatie voegt een extra beveiliging toe aan de Zarafa WebApp."
+msgid "The two-factor authentication provides an additional protection for the WebApp."
+msgstr "Tweestapsauthenticatie voegt een extra beveiliging toe aan de WebApp."
 
 #: js/settings/SettingsGoogle2FAWidget.js:25
 msgid "After activation you need next to your password an one-time code to log in."

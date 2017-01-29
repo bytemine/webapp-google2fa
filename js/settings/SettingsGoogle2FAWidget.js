@@ -21,7 +21,7 @@ Zarafa.plugins.google2fa.settings.SettingsGoogle2FAWidget = Ext.extend(Zarafa.se
 			items: [{
 				xtype: "displayfield",
 				hideLabel: true,
-				value: dgettext("plugin_google2fa", "The two-factor authentication provides an additional protection for the Zarafa WebApp.") + "<br />" +
+				value: dgettext("plugin_google2fa", "The two-factor authentication provides an additional protection for the WebApp.") + "<br />" +
 					dgettext("plugin_google2fa", "After activation you need next to your password an one-time code to log in.") + "<br />" + "<br />" +
 					dgettext("plugin_google2fa", "To generate an one-time code, you have to configure a second device, usually a smartphone.") + "<br />&nbsp;"
 			}, {
