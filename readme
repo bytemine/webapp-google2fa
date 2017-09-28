@@ -13,6 +13,9 @@ Tested on:
 
 Release notes:
 
+0.4.7
+- Add exception handling for IPv6 with PHP
+
 0.4.6
 - IPv6 support for whitelist (PLUGIN_GOOGLE2FA_WHITELIST in config)
 

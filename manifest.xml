@@ -2,7 +2,7 @@
 <!DOCTYPE plugin SYSTEM "manifest.dtd">
 <plugin version="2">
 	<info>
-		<version>0.4.6</version>
+		<version>0.4.7</version>
 		<name>google2fa</name>
 		<title>Two-factor authentication</title>
 		<author>Norman Thimm, Daniel Rauer</author>

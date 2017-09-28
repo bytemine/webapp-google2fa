@@ -56,8 +56,12 @@ class PluginGoogle2FA extends Plugin {
 
 					// Check, if Client-IP is in Whitelist
 					if (PLUGIN_GOOGLE2FA_WHITELIST !== "") {
-						if (Symfony\Component\HttpFoundation\IpUtils::checkIp($_SERVER['REMOTE_ADDR'], explode (",", PLUGIN_GOOGLE2FA_WHITELIST)))
-							break;
+						try {
+							if (Symfony\Component\HttpFoundation\IpUtils::checkIp($_SERVER['REMOTE_ADDR'], explode (",", PLUGIN_GOOGLE2FA_WHITELIST)))
+								break;
+						} catch (Exception $e) { // show error, if we have to check an IPv6 connection and PHP was compiled with option "disable-ipv6"
+							die ("Google2FA: " . $e->getMessage());
+						}
 					}
 
 					// Check, if token authorisation is already done (example: attachment-upload)
