@@ -13,6 +13,9 @@ Tested on:
 
 Release notes:
 
+0.4.6
+- IPv6 support for whitelist (PLUGIN_GOOGLE2FA_WHITELIST in config)
+
 0.4.5
 - Recommendations by Kopano added (Using EncryptionStore, WebAppSession, Constructor Cleanup, FavIcon, Disable button if user can not use it)
 - Remove name Zarafa from configuration site
