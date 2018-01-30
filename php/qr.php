@@ -9,19 +9,16 @@
  */
 
 	require "../../../init.php";
-	require "../../../config.php";
-
-        session_name(COOKIE_NAME);
-        session_start();
+	require BASE_PATH . "config.php";
 
 	require "../config.php";
 	require "class.google2facrypt.php";
 	require "class.google2fadata." . PLUGIN_GOOGLE2FA_DATABASE . ".php";
 	require "external/phpqrcode/qrlib.php";
-	require "../../../server/includes/core/class.encryptionstore.php";
+	require BASE_PATH . "server/includes/core/class.encryptionstore.php";
 
-	if(isset($_SESSION['google2FAUsername']) && isset($_SESSION['google2FASecret'])) {
-		$username = $_SESSION['google2FAUsername'];
+	$username = $encryptionStore->get('google2FAUsername');
+	if($username!==null && isset($_SESSION['google2FASecret'])) {
 		$secret = $_SESSION['google2FASecret'];
 	} else {
 		$encryptionStore = EncryptionStore::getInstance();
@@ -30,7 +27,7 @@
 	}
 
 	$url = "otpauth://totp/" . PLUGIN_GOOGLE2FA_APPNAME . ":" . $username . "@" . PLUGIN_GOOGLE2FA_APPNAME .
-                "?secret=" . $secret . "&issuer=" . PLUGIN_GOOGLE2FA_APPNAME;
+				"?secret=" . $secret . "&issuer=" . PLUGIN_GOOGLE2FA_APPNAME;
 
 	QRcode::png($url, false, QR_ECLEVEL_L, 5, 0);
 

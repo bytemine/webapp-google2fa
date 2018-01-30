@@ -102,8 +102,12 @@ define('PLUGIN_GOOGLE2FA_ENBUTTCODES', true);
 define('PLUGIN_GOOGLE2FA_ENBUTTRESET', true);
 
 /**
- * IP Whitelist with comma seperated IP/CIDR netmasks for login without 2FA
- * f.e. '192.168.172.0/24,127.0.0.1' or gethostbyname('uri')
+ * Whitelist with comma seperated IP addresses or subnets IPv4 and/or IPv6 for login without 2FA
+ * Info: If the webserver allows IPv6 and the provider of the user supports IPv6, you have to use
+ *       IPv6 in whitelist and every device has another IPv6 address!
+ * Examples: '192.168.172.0/24,127.0.0.1' or gethostbyname('uri') or
+ *           '2003:d5:b3d9:cf00::/64' or dns_get_record('uri', DNS_AAAA)[0]["ipv6"] . "/64"
+ * Standard masks: '/32' (IPv4), '/128' (IPv6)
  */
 define('PLUGIN_GOOGLE2FA_WHITELIST', '');
 

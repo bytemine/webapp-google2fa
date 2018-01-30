@@ -1,18 +1,25 @@
 Project Homepage:
-http://www.familiethimm.de
-
-Zarafa Project site:
-https://community.zarafa.com/pg/plugins/project/32087/developer/norman/google2fa-webapp-twofactor-authentication-with-google-authenticator
+https://www.familiethimm.de/en/google2fa-kopano-zarafa-2-faktor-authentifizierung-2fa-google-authenticator/
 
 Code Repository:
 https://bitbucket.org/normanth/google2fa
 
-
 Tested on:
-- Zarafa WebApp 2.2.1 - ZCP 7.2.4
-- Kopano WebApp 3.1.0 - Kopano Core 8.1.0
+- Kopano WebApp 3.3.0 - Kopano Core 8.3.0
+- Kopano DeskApp: Only works without 2FA (configure whitelist in config.php)
 
 Release notes:
+
+0.4.7
+- Add exception handling for IPv6 with PHP
+
+0.4.6
+- IPv6 support for whitelist (PLUGIN_GOOGLE2FA_WHITELIST in config)
+
+0.4.5
+- Recommendations by Kopano added (Using EncryptionStore, WebAppSession, Constructor Cleanup, FavIcon, Disable button if user can not use it)
+- Remove name Zarafa from configuration site
+- Rename config.php to config_default.php
 
 0.4.4
 - Adjust a parent constructor call to be compatible with Zarafa WebApp and Kopano WebApp.

@@ -1,9 +1,37 @@
 <?php
-	include("../../../config.php");
+	require_once("../../../init.php");
+	require_once(BASE_PATH . "config.php");
+	require_once(BASE_PATH . "server/includes/core/class.webappsession.php");
+	require_once(BASE_PATH . "server/includes/core/class.webappauthentication.php");
+	require_once(BASE_PATH . "server/includes/core/class.theming.php");
 	$webappTitle = defined('WEBAPP_TITLE') && WEBAPP_TITLE ? WEBAPP_TITLE : 'WebApp';
-	session_name(COOKIE_NAME);
-	session_start();
+
+	// Make sure the php session is started
+	WebAppSession::getInstance();
+
 	$error = (isset($_SESSION['google2FALoggedOn']) && !$_SESSION['google2FALoggedOn']) ? TRUE : FALSE;
+
+	/*
+	 * Get the favicon either from theme or use the default.
+	 *
+	 * @param string theme the users theme
+	 * @return string favicon
+	 */
+	function getFavicon($theme)
+	{
+
+		if ( $theme ) {
+			$favicon = Theming::getFavicon($theme);
+		}
+
+		if ( !isset($favicon) || $favicon === false) {
+			$favicon = 'client/resources/images/favicon.ico?kv2.2.0';
+		}
+
+		return $favicon;
+	}
+
+	$favicon = getFavicon(Theming::getActiveTheme());
 ?>
 
 <!DOCTYPE html>
@@ -24,7 +52,7 @@
 		<!--link rel="apple-touch-icon" href="/apple-touch-icon.png"-->
 		<link rel="icon" href="../../../<?php echo $favicon ?>" type="image/x-icon">
 		<link rel="shortcut icon" href="../../../<?php echo $favicon ?>" type="image/x-icon">
-		<?php if(strpos(file_get_contents('../../../version'), '2.2.0') === 0) { ?>
+		<?php if(file_exists("../../../client/resources/design2015/css/external/login.css")) { ?>
 		<link rel="stylesheet" type="text/css" href="../../../client/resources/design2015/css/external/login.css">
 		<?php } else { ?>
 		<link rel="stylesheet" type="text/css" href="../../../client/resources/css/external/login.css">
@@ -131,7 +159,7 @@
 				}
 				// Adding this class will show the loader
 				cntEl.className += ' loading';
-				// Call onResize, because an error message might have enlarged the login box, 
+				// Call onResize, because an error message might have enlarged the login box,
 				// so it is out of position.
 				onResize();
 				firstSubmit = false;
