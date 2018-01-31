@@ -10,6 +10,9 @@ Tested on:
 
 Release notes:
 
+0.4.8
+- Fix local generation of QR codes.
+
 0.4.7
 - Add exception handling for IPv6 with PHP
 

@@ -17,6 +17,7 @@
 	require "external/phpqrcode/qrlib.php";
 	require BASE_PATH . "server/includes/core/class.encryptionstore.php";
 
+	$encryptionStore = EncryptionStore::getInstance();
 	$username = $encryptionStore->get('google2FAUsername');
 	if($username!==null && isset($_SESSION['google2FASecret'])) {
 		$secret = $_SESSION['google2FASecret'];
