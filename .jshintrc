@@ -1,0 +1,9 @@
+{
+  "asi": true,
+  "globals": {
+    "container: true,
+    "dgettext: true,
+    "Ext": true,
+    "Zarafa": true
+  }
+}

@@ -9,7 +9,7 @@ pipelines:
   - step:
       image: eeacms/jshint
       script:
-        - jshint --show-non-errors --verbose js/
+        - jshint --config ./.jshintrc --show-non-errors --verbose js/
   custom:
     php-latest:
     - step:
@@ -19,6 +19,4 @@ pipelines:
     - step:
         image: eeacms/jslint
         script:
-          - jslint --color js/*.js
-          - jslint --color js/data/*.js
-          - jslint --color js/settings/*.js
+          - jslint --color --config ./.jslint.conf js/*.js js/data/*.js js/settings/*.js
