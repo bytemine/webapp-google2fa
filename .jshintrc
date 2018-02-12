@@ -1,6 +1,7 @@
 {
   "asi": true,
   "globals": {
+    "_": true,
     "container": true,
     "dgettext": true,
     "Ext": true,
