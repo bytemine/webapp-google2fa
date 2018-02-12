@@ -4,21 +4,21 @@ image: php:5
 pipelines:
   default:
   - step:
-    script:
-      - syntax-lint
+      script:
+        - syntax-lint
   - step:
-    image: eeacms/jshint
-    script:
-      - jshint --show-non-errors --verbose js/
+      image: eeacms/jshint
+      script:
+        - jshint --show-non-errors --verbose js/
   custom:
     php-latest:
     - step:
-      image: php:latest
-      script:
-        - syntax-lint
+        image: php:latest
+        script:
+          - syntax-lint
     - step:
-      image: eeacms/jslint
-      script:
-        - jslint --color js/*.js
-        - jslint --color js/data/*.js
-        - jslint --color js/settings/*.js
+        image: eeacms/jslint
+        script:
+          - jslint --color js/*.js
+          - jslint --color js/data/*.js
+          - jslint --color js/settings/*.js
