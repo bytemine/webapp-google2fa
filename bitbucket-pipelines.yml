@@ -5,7 +5,7 @@ pipelines:
   default:
   - step:
       script:
-        - syntax-lint
+        - ./syntax-lint
   - step:
       image: eeacms/jshint
       script:
@@ -15,7 +15,7 @@ pipelines:
     - step:
         image: php:latest
         script:
-          - syntax-lint
+          - ./syntax-lint
     - step:
         image: eeacms/jslint
         script:
