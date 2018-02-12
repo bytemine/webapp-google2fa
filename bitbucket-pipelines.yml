@@ -16,3 +16,9 @@ pipelines:
       image: php:latest
       script:
         - syntax-lint
+    - step:
+      image: eeacms/jslint
+      script:
+        - jslint --color js/*.js
+        - jslint --color js/data/*.js
+        - jslint --color js/settings/*.js
