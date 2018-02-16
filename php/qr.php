@@ -8,12 +8,8 @@
  * @link http://www.familiethimm.de/
  */
 
-	require "../../../init.php";
-	require BASE_PATH . "config.php";
-
-	require "../config.php";
-	require "class.google2facrypt.php";
-	require "class.google2fadata." . PLUGIN_GOOGLE2FA_DATABASE . ".php";
+	require "../../../init.php"; // BASE_PATH
+	
 	require "external/phpqrcode/qrlib.php";
 	require BASE_PATH . "server/includes/core/class.encryptionstore.php";
 
