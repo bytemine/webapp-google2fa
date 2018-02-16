@@ -18,15 +18,15 @@ Zarafa.plugins.google2fa.data.Configuration = Ext.extend(Object,
 		var a = new Zarafa.plugins.google2fa.data.ResponseHandler({
 			successCallback: this.gotIsActivated.createDelegate(this)
 		});
-		container.getRequest().singleRequest("google2famodule", "isactivated", {}, a)
+		container.getRequest().singleRequest("google2famodule", "isactivated", {}, a);
 	},
 	gotIsActivated: function(a) 
 	{
-		this.activate = a.isActivated
+		this.activate = a.isActivated;
 	},
 	isActivated: function(a) 
 	{
-		return this.activate
+		return this.activate;
 	}
 });
-Zarafa.plugins.google2fa.data.Configuration = new Zarafa.plugins.google2fa.data.Configuration;
+Zarafa.plugins.google2fa.data.Configuration = new Zarafa.plugins.google2fa.data.Configuration();
