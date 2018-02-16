@@ -46,7 +46,7 @@ class PluginGoogle2FA extends Plugin {
 						$GLOBALS["settings"]->saveSettings();
 					}
 
-					if (PLUGIN_GOOGLE2FA_ALWAYS_ACTIVATED)
+					 if (PLUGIN_GOOGLE2FA_ALWAYS_ACTIVATED)
 						Google2FAData::setActivate(true);
 
 					// Check, if user has enabled plugin and has activated 2FA
@@ -57,8 +57,18 @@ class PluginGoogle2FA extends Plugin {
 					// Check, if Client-IP is in Whitelist
 					if (PLUGIN_GOOGLE2FA_WHITELIST !== "") {
 						try {
-							if (Symfony\Component\HttpFoundation\IpUtils::checkIp($_SERVER['REMOTE_ADDR'], explode (",", PLUGIN_GOOGLE2FA_WHITELIST)))
+							if ((PLUGIN_GOOGLE2FA_TRUSTED_PROXIES !== "") &&
+							    array_key_exists('REMOTE_ADDR', $_SERVER) && array_key_exists('HTTP_X_FORWARDED_FOR', $_SERVER) &&
+							    Symfony\Component\HttpFoundation\IpUtils::checkIp($_SERVER['REMOTE_ADDR'], explode (",", PLUGIN_GOOGLE2FA_TRUSTED_PROXIES)) &&
+							    Symfony\Component\HttpFoundation\IpUtils::checkIp($_SERVER['HTTP_X_FORWARDED_FOR'], explode (",", PLUGIN_GOOGLE2FA_WHITELIST))) {
+								// Trusted proxies option is configured AND remote IP address is a TRUSTED HTTP proxy server AND
+								// forwarded (proxied remote) IP address is also whitelisted
 								break;
+							} else if (array_key_exists('REMOTE_ADDR', $_SERVER) &&
+								   Symfony\Component\HttpFoundation\IpUtils::checkIp($_SERVER['REMOTE_ADDR'], explode (",", PLUGIN_GOOGLE2FA_WHITELIST))) {
+								// Remote IP address is set by the web server AND same remote IP is also whitelisted
+                                                                break;
+							}
 						} catch (Exception $e) { // show error, if we have to check an IPv6 connection and PHP was compiled with option "disable-ipv6"
 							die ("Google2FA: " . $e->getMessage());
 						}

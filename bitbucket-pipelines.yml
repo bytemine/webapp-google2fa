@@ -1,0 +1,25 @@
+# Bitbucket Pipelines YAML configuration
+# https://confluence.atlassian.com/bitbucket/configure-bitbucket-pipelines-yml-792298910.html
+# https://confluence.atlassian.com/bitbucket/troubleshooting-bitbucket-pipelines-792298903.html
+# https://confluence.atlassian.com/bitbucket/php-with-bitbucket-pipelines-873907835.html
+# https://confluence.atlassian.com/bitbucket/run-pipelines-manually-861242583.html
+image: php:5
+pipelines:
+  default:
+  - step:
+      script:
+        - ./syntax-lint
+  - step:
+      image: eeacms/jshint
+      script:
+        - jshint --config ./.jshintrc --show-non-errors --verbose js/
+  custom:
+    php-latest:
+    - step:
+        image: php:latest
+        script:
+          - ./syntax-lint
+    - step:
+        image: eeacms/jslint
+        script:
+          - jslint --color --config ./.jslint.conf js/*.js js/data/*.js js/settings/*.js
