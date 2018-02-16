@@ -18,15 +18,9 @@
 	require BASE_PATH . "server/includes/core/class.encryptionstore.php";
 
 	$encryptionStore = EncryptionStore::getInstance();
-	$username = $encryptionStore->get('google2FAUsername');
-	if($username!==null && isset($_SESSION['google2FASecret'])) {
-		$secret = $_SESSION['google2FASecret'];
-	} else {
-		$encryptionStore = EncryptionStore::getInstance();
-		$username = $encryptionStore->get('username');
-		$secret = base64_decode($_SESSION['PLUGIN_GOOGLE2FA_SECRET']);
-	}
-
+	$username = $encryptionStore->get('username');
+	$secret = base64_decode($_SESSION['PLUGIN_GOOGLE2FA_SECRET']);
+	
 	$url = "otpauth://totp/" . PLUGIN_GOOGLE2FA_APPNAME . ":" . $username . "@" . PLUGIN_GOOGLE2FA_APPNAME .
 				"?secret=" . $secret . "&issuer=" . PLUGIN_GOOGLE2FA_APPNAME;
 
