@@ -10,6 +10,9 @@ Tested on:
 
 Release notes:
 
+0.5.0
+- Add support for trusted HTTP proxies. (Attention to update: Please add new variable PLUGIN_GOOGLE2FA_TRUSTED_PROXIES in config.php - see config_default.php!)
+
 0.4.8
 - Fix local generation of QR codes.
 
