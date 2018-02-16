@@ -23,7 +23,7 @@ Zarafa.plugins.google2fa.settings.SettingsGoogle2FACategory = Ext.extend(Zarafa.
 				xtype: "Zarafa.plugins.google2fa.settingsgoogle2fawidget"
 			}, container.populateInsertionPoint("context.settings.category.google2fa", this)]
 		});
-		Zarafa.plugins.google2fa.settings.SettingsGoogle2FACategory.superclass.constructor.call(this, a)
+		Zarafa.plugins.google2fa.settings.SettingsGoogle2FACategory.superclass.constructor.call(this, a);
 	}
 });
 
