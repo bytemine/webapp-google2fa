@@ -9,9 +9,10 @@
  */
 
 	require "../../../init.php"; // BASE_PATH
-	
+	require BASE_PATH . "server/includes/core/class.encryptionstore.php";	
+
+	require "../config.php"; // PLUGIN_GOOGLE2FA_APPNAME
 	require "external/phpqrcode/qrlib.php";
-	require BASE_PATH . "server/includes/core/class.encryptionstore.php";
 
 	$encryptionStore = EncryptionStore::getInstance();
 	$username = $encryptionStore->get('username');
