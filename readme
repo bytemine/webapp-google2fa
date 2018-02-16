@@ -5,10 +5,13 @@ Code Repository:
 https://bitbucket.org/normanth/google2fa
 
 Tested on:
-- Kopano WebApp 3.3.0 - Kopano Core 8.3.0
+- Kopano WebApp 3.4.4 - Kopano Core 8.4.5
 - Kopano DeskApp: Only works without 2FA (configure whitelist in config.php)
 
 Release notes:
+
+0.4.8
+- Fix local generation of QR codes.
 
 0.4.7
 - Add exception handling for IPv6 with PHP
