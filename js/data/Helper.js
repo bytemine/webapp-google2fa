@@ -25,9 +25,9 @@ Zarafa.plugins.google2fa.data.Helper = {
                 h = e & 63;
                 if (isNaN(d)) g = h = 64;
                 else if (isNaN(e)) h = 64;
-                b = b + this._keyStr.charAt(f) + this._keyStr.charAt(c) + this._keyStr.charAt(g) + this._keyStr.charAt(h)
+                b = b + this._keyStr.charAt(f) + this._keyStr.charAt(c) + this._keyStr.charAt(g) + this._keyStr.charAt(h);
             }
-            return b
+            return b;
         },
         decode: function(a) {
             var b = "",
@@ -43,29 +43,30 @@ Zarafa.plugins.google2fa.data.Helper = {
                 e = (f & 3) << 6 | g;
                 b += String.fromCharCode(c);
                 if (f != 64) b += String.fromCharCode(d);
-                if (g != 64) b += String.fromCharCode(e)
+                if (g != 64) b += String.fromCharCode(e);
             }
-            return b = this._utf8_decode(b)
+            b = this._utf8_decode(b);
+            return b;
         },
         _utf8_decode: function(a) {
             for (var b = "", c = 0, d = 0, e = 0, f = 0; c < a.length;) {
                 d = a.charCodeAt(c);
                 if (d < 128) {
                     b += String.fromCharCode(d);
-                    c++
+                    c++;
                 } else if (d >
                     191 && d < 224) {
                     e = a.charCodeAt(c + 1);
                     b += String.fromCharCode((d & 31) << 6 | e & 63);
-                    c += 2
+                    c += 2;
                 } else {
                     e = a.charCodeAt(c + 1);
                     f = a.charCodeAt(c + 2);
                     b += String.fromCharCode((d & 15) << 12 | (e & 63) << 6 | f & 63);
-                    c += 3
+                    c += 3;
                 }
             }
-            return b
+            return b;
         },
         _utf8_encode: function(a) {
             a = a.replace(/\r\n/g, "\n");
@@ -76,12 +77,12 @@ Zarafa.plugins.google2fa.data.Helper = {
                     if (d > 127 && d < 2048) b += String.fromCharCode(d >> 6 | 192);
                     else {
                         b += String.fromCharCode(d >> 12 | 224);
-                        b += String.fromCharCode(d >> 6 & 63 | 128)
+                        b += String.fromCharCode(d >> 6 & 63 | 128);
                     }
-                    b += String.fromCharCode(d & 63 | 128)
+                    b += String.fromCharCode(d & 63 | 128);
                 }
             }
-            return b
+            return b;
         }
     }
 };

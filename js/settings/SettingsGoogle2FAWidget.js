@@ -80,11 +80,11 @@ Zarafa.plugins.google2fa.settings.SettingsGoogle2FAWidget = Ext.extend(Zarafa.se
 				width: 250
 			}]
 		});
-		Zarafa.plugins.google2fa.settings.SettingsGoogle2FAWidget.superclass.constructor.call(this, a)
+		Zarafa.plugins.google2fa.settings.SettingsGoogle2FAWidget.superclass.constructor.call(this, a);
 	},
 	getStatus: function()
 	{
-		return (Zarafa.plugins.google2fa.data.Configuration.isActivated() ? dgettext("plugin_google2fa", "Activated") : dgettext("plugin_google2fa", "Deactivated"))
+		return (Zarafa.plugins.google2fa.data.Configuration.isActivated() ? dgettext("plugin_google2fa", "Activated") : dgettext("plugin_google2fa", "Deactivated"));
 	},
 	openResetConfigurationDialog: function() 
 	{
@@ -95,14 +95,14 @@ Zarafa.plugins.google2fa.settings.SettingsGoogle2FAWidget = Ext.extend(Zarafa.se
 			buttons: Zarafa.common.dialogs.MessageBox.YESNO,
 			fn: this.resetConfiguration,
 			scope: this
-		})
+		});
 	},
 	resetConfiguration: function(a) 
 	{
 		if (a === "yes") {
 			container.getRequest().singleRequest("google2famodule", "resetconfiguration", {}, new Zarafa.plugins.google2fa.data.ResponseHandler({
                         	successCallback: this.openResetConfigurationFinishDialog.createDelegate(this)
-	                }))
+	                }));
 		}
 	},
 	openResetConfigurationFinishDialog: function(a) 
@@ -115,23 +115,23 @@ Zarafa.plugins.google2fa.settings.SettingsGoogle2FAWidget = Ext.extend(Zarafa.se
 			icon: Zarafa.common.dialogs.MessageBox.INFO,
 			buttons: Zarafa.common.dialogs.MessageBox.OK,
 			scope: this
-		})
+		});
 	},
 	openTimelessCodesDialog: function() 
 	{
 		container.getRequest().singleRequest("google2famodule", "gettimelesscodes", {generate: false}, new Zarafa.plugins.google2fa.data.ResponseHandler({
 			successCallback: this.openTimelessCodesDialogX.createDelegate(this)
-		}))
+		}));
 	},
 	openTimelessCodesDialogX: function(a) 
 	{
-		var codeLabel = dgettext("plugin_google2fa", "Code");
+		// var codeLabel = dgettext("plugin_google2fa", "Code");
 		var codes = "";
 		for (var i = 0; i < a.codes.length; ++i)
 		{
 			var l = String.format(dgettext("plugin_google2fa", "Code {0}"), "" + (i+1)) + ": ";
 			var c = Zarafa.plugins.google2fa.data.Helper.Base64.decode(a.codes[i]);
-			codes = codes + l + c + "<br />"
+			codes = codes + l + c + "<br />";
 		}
 		Zarafa.common.dialogs.MessageBox.addCustomButtons({
 			title: dgettext("plugin_google2fa", "Time-independent codes"),
@@ -148,7 +148,7 @@ Zarafa.plugins.google2fa.settings.SettingsGoogle2FAWidget = Ext.extend(Zarafa.se
 			}],
 			scope: this,
 			width: 500
-		})
+		});
 	},
 	generateTimelessCodes: function(a) 
 	{
@@ -156,14 +156,14 @@ Zarafa.plugins.google2fa.settings.SettingsGoogle2FAWidget = Ext.extend(Zarafa.se
 		{
 			container.getRequest().singleRequest("google2famodule", "gettimelesscodes", {generate: true}, new Zarafa.plugins.google2fa.data.ResponseHandler({
 				successCallback: this.openTimelessCodesDialogX.createDelegate(this)
-			}))
+			}));
 		}
 	},
 	openConfigurationDialog: function() 
 	{
 		container.getRequest().singleRequest("google2famodule", "getsecret", {}, new Zarafa.plugins.google2fa.data.ResponseHandler({
 			successCallback: this.openConfigurationDialogX.createDelegate(this)
-		}))
+		}));
 	},
 	openConfigurationDialogX: function(a) 
 	{
@@ -185,19 +185,19 @@ Zarafa.plugins.google2fa.settings.SettingsGoogle2FAWidget = Ext.extend(Zarafa.se
                         }],
 			scope: this,
 			width: 500
-		})
+		});
 	},
 	openVerifyCodeDialog: function(a) 
 	{
 		if (a === "verify")
-			Zarafa.common.dialogs.MessageBox.prompt(dgettext("plugin_google2fa", "Test generated code"), dgettext("plugin_google2fa", "Please enter code"), this.verifyCode, this)
+			Zarafa.common.dialogs.MessageBox.prompt(dgettext("plugin_google2fa", "Test generated code"), dgettext("plugin_google2fa", "Please enter code"), this.verifyCode, this);
 	},
 	verifyCode: function(a, b) 
 	{
 		if (a === "ok") {
 			container.getRequest().singleRequest("google2famodule", "verifycode", {code: b}, new Zarafa.plugins.google2fa.data.ResponseHandler({
                         	successCallback: this.openResponseDialog.createDelegate(this)
-	                }))
+	                }));
 		}	
 	},
 	openResponseDialog: function(a) 
@@ -211,7 +211,7 @@ Zarafa.plugins.google2fa.settings.SettingsGoogle2FAWidget = Ext.extend(Zarafa.se
                                 buttons: Zarafa.common.dialogs.MessageBox.OK,
                                 scope: this,
 				width: 350
-                        })
+                        });
 		} else {
 			Zarafa.common.dialogs.MessageBox.show({
 				title: dgettext("plugin_google2fa", "Test generated code"),
@@ -222,21 +222,21 @@ Zarafa.plugins.google2fa.settings.SettingsGoogle2FAWidget = Ext.extend(Zarafa.se
 				buttons: Zarafa.common.dialogs.MessageBox.OK,
 				scope: this,
 				width: 350
-			})
+			});
 		}
 	},
 	activate: function() 
 	{
 		container.getRequest().singleRequest("google2famodule", "activate", {}, new Zarafa.plugins.google2fa.data.ResponseHandler({
 			successCallback: this.setStatus.createDelegate(this)
-		}))
+		}));
 	},
 	setStatus: function(a) 	
 	{
 		Zarafa.plugins.google2fa.data.Configuration.gotIsActivated(a);
 		this.status.setValue(this.getStatus());
 		container.getNotifier().notify("info.saved", dgettext("plugin_google2fa", "Two-factor authentication") + ": " + this.getStatus(), 
-			dgettext("plugin_google2fa", "Current status") + ": " + this.getStatus())
+			dgettext("plugin_google2fa", "Current status") + ": " + this.getStatus());
 	}
 });
 Ext.reg("Zarafa.plugins.google2fa.settingsgoogle2fawidget", Zarafa.plugins.google2fa.settings.SettingsGoogle2FAWidget);

@@ -8,25 +8,16 @@
  * @link http://www.familiethimm.de/
  */
 
-	require "../../../init.php";
-	require BASE_PATH . "config.php";
+	require "../../../init.php"; // BASE_PATH
+	require BASE_PATH . "server/includes/core/class.encryptionstore.php";	
 
-	require "../config.php";
-	require "class.google2facrypt.php";
-	require "class.google2fadata." . PLUGIN_GOOGLE2FA_DATABASE . ".php";
+	require "../config.php"; // PLUGIN_GOOGLE2FA_APPNAME
 	require "external/phpqrcode/qrlib.php";
-	require BASE_PATH . "server/includes/core/class.encryptionstore.php";
 
 	$encryptionStore = EncryptionStore::getInstance();
-	$username = $encryptionStore->get('google2FAUsername');
-	if($username!==null && isset($_SESSION['google2FASecret'])) {
-		$secret = $_SESSION['google2FASecret'];
-	} else {
-		$encryptionStore = EncryptionStore::getInstance();
-		$username = $encryptionStore->get('username');
-		$secret = base64_decode($_SESSION['PLUGIN_GOOGLE2FA_SECRET']);
-	}
-
+	$username = $encryptionStore->get('username');
+	$secret = base64_decode($_SESSION['PLUGIN_GOOGLE2FA_SECRET']);
+	
 	$url = "otpauth://totp/" . PLUGIN_GOOGLE2FA_APPNAME . ":" . $username . "@" . PLUGIN_GOOGLE2FA_APPNAME .
 				"?secret=" . $secret . "&issuer=" . PLUGIN_GOOGLE2FA_APPNAME;
 

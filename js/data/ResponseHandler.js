@@ -17,42 +17,44 @@ Zarafa.plugins.google2fa.data.ResponseHandler = Ext.extend(Zarafa.core.data.Abst
 	failureCallback: null,
 	doResetconfiguration: function(a) 
 	{
-		this.successCallback(a)
+		this.successCallback(a);
 	},
 	doGetsecret: function(a) 
 	{
-		this.successCallback(a)
+		this.successCallback(a);
 	},
 	doActivate: function(a) 
 	{
-		this.successCallback(a)
+		this.successCallback(a);
 	},
 	doIsactivated: function(a) 
 	{
-		this.successCallback(a)
+		this.successCallback(a);
 	},
 	doVerifycode: function(a) 
 	{
-		this.successCallback(a)
+		this.successCallback(a);
 	},
 	doGettimelesscodes: function(a) 
 	{
-		this.successCallback(a)
+		this.successCallback(a);
 	},
 	doError: function(a) 
 	{
-		a.error ? Zarafa.common.dialogs.MessageBox.show(
-		{
-			title: "Error",
-			msg: a.error.info.original_message,
-			icon: Zarafa.common.dialogs.MessageBox.ERROR,
-			buttons: Zarafa.common.dialogs.MessageBox.OK
-		}) : Zarafa.common.dialogs.MessageBox.show({
-			title: "Error",
-			msg: a.info.original_message,
-			icon: Zarafa.common.dialogs.MessageBox.ERROR,
-			buttons: Zarafa.common.dialogs.MessageBox.OK
-		})
+		if (a.error)
+			Zarafa.common.dialogs.MessageBox.show({
+				title: "Error",
+				msg: a.error.info.original_message,
+				icon: Zarafa.common.dialogs.MessageBox.ERROR,
+				buttons: Zarafa.common.dialogs.MessageBox.OK
+			});
+		else
+			Zarafa.common.dialogs.MessageBox.show({
+				title: "Error",
+				msg: a.info.original_message,
+				icon: Zarafa.common.dialogs.MessageBox.ERROR,
+				buttons: Zarafa.common.dialogs.MessageBox.OK
+			});
 	}
 });
 Ext.reg("zarafa.google2faresponsehandler", Zarafa.plugins.google2fa.data.ResponseHandler);

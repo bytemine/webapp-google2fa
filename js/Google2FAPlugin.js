@@ -21,7 +21,7 @@ Zarafa.plugins.google2fa.Google2FA = Ext.extend(Zarafa.core.Plugin, {
 	constructor : function (config)
 	{
 		config = config || {};
-		Zarafa.plugins.google2fa.Google2FA.superclass.constructor.call(this, config)
+		Zarafa.plugins.google2fa.Google2FA.superclass.constructor.call(this, config);
 	},
 
 	/**
@@ -31,7 +31,7 @@ Zarafa.plugins.google2fa.Google2FA = Ext.extend(Zarafa.core.Plugin, {
 	{
 		Zarafa.plugins.google2fa.Google2FA.superclass.initPlugin.apply(this, arguments);
 		Zarafa.plugins.google2fa.data.Configuration.init();
-		this.registerInsertionPoint("context.settings.categories", this.createSettingCategories, this)
+		this.registerInsertionPoint("context.settings.categories", this.createSettingCategories, this);
 	},
 
 	/**
@@ -40,7 +40,7 @@ Zarafa.plugins.google2fa.Google2FA = Ext.extend(Zarafa.core.Plugin, {
 	createSettingCategories: function() {
 		return {
 			xtype: "Zarafa.plugins.google2fa.settingsgoogle2facategory"
-		}
+		};
 	}
 });
 
