@@ -52,12 +52,21 @@
 		<!--link rel="apple-touch-icon" href="/apple-touch-icon.png"-->
 		<link rel="icon" href="../../../<?php echo $favicon ?>" type="image/x-icon">
 		<link rel="shortcut icon" href="../../../<?php echo $favicon ?>" type="image/x-icon">
-		<?php if(file_exists("../../../client/resources/design2015/css/external/login.css")) { ?>
-		<link rel="stylesheet" type="text/css" href="../../../client/resources/design2015/css/external/login.css">
-		<?php } else { ?>
-		<link rel="stylesheet" type="text/css" href="../../../client/resources/css/external/login.css">
-		<?php } ?>
-
+		
+		<?php 
+			if (file_exists("../../../client/resources/design2015/css/external/login.css")) // old version
+				echo '                <link rel="stylesheet" type="text/css" href="../../../client/resources/design2015/css/external/login.css">';
+			else
+				echo '                <link rel="stylesheet" type="text/css" href="../../../client/resources/css/external/login.css">';
+			
+			$theme = Theming::getActiveTheme(); // Add the styling of the theme
+			$css = Theming::getCss($theme);
+			if ( count($css) ){
+				foreach ( $css as $file ){
+					echo '                <link rel="stylesheet" type="text/css" href="../../../'.$file.'">';
+				}
+			}
+		?>
 		<script>
 			navigator.sayswho = (function(){
 				var ua= navigator.userAgent, tem,
