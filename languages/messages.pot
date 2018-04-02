@@ -29,8 +29,8 @@ msgstr ""
 msgid "Invalid code. Please check code."
 msgstr ""
 
-#: php/plugin.google2fa.php:91
-msgid "Login"
+#: php/plugin.google2fa.php:100
+msgid "Cancel"
 msgstr ""
 
 #: js/settings/SettingsGoogle2FAWidget.js:19
@@ -133,6 +133,7 @@ msgstr ""
 msgid "Generate new codes"
 msgstr ""
 
+#: php/plugin.google2fa.php:99
 #: js/settings/SettingsGoogle2FAWidget.js:146
 msgid "Ok"
 msgstr ""

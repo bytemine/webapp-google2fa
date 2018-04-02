@@ -122,7 +122,7 @@
 			<div id="content">
 				<div class="left">
 					<div id="logo"></div>
-					<h2><?php echo $webappTitle; ?> <?php echo file_get_contents("../../../version"); ?></h2>
+					<h2>WebApp <?php echo file_get_contents("../../../version"); ?></h2>
 				</div>
 				<div class="right">
 					<h1><?= $_SESSION['google2FAEcho']['boxTitle'] ?></h1>
@@ -131,8 +131,8 @@
 						<?php if ( isset($error) && $error ) { ?>
 						<div id="error"><?php echo $_SESSION['google2FAEcho']['msgInvalidCode']; ?></div>
 						<?php } ?>
-
-						<input id="submitbutton" class="button" type="submit" value="<?= $_SESSION['google2FAEcho']['butLogin']; ?>">
+						<a href="../../../index.php?logout"><?= $_SESSION['google2FAEcho']['butCancel']; ?></a>&nbsp;
+						<input id="submitbutton" class="button" type="submit" value="<?= $_SESSION['google2FAEcho']['butOk']; ?>" />
 					</form>
 				</div>
 			</div>

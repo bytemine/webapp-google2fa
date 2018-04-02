@@ -17,9 +17,11 @@
 	WebAppSession::getInstance();
 
 	$code = ($_POST && array_key_exists('token', $_POST)) ? $_POST['token'] : '';
-	$secret = $_SESSION['google2FASecret'];
-	$usedCodes = $_SESSION['google2FAUsedCodes'];
-	$timelessCodes = $_SESSION['google2FATimelessCodes'];
+	
+	$encryptionStore = EncryptionStore::getInstance();
+	$secret = $encryptionStore->get('google2FASecret');
+	$usedCodes = $encryptionStore->get('google2FAUsedCodes');
+	$timelessCodes = $encryptionStore->get('google2FATimelessCodes');
 
 	$ga = new PHPGangsta_GoogleAuthenticator();
 	$verification = false;
@@ -32,11 +34,6 @@
 	}
 
 	if ($verification) {
-		$encryptionStore = EncryptionStore::getInstance();
-		$username = $encryptionStore->get('google2FAUsername');
-		$password = $encryptionStore->get('google2FAPassword');
-		$encryptionStore->add('username', $username);
-		$encryptionStore->add('password', $password);
 		$_SESSION['google2FACode'] = $code; // to disable code
 		$_SESSION['google2FALoggedOn'] = TRUE; // 2FA successful
 		header('Location: ../../../index.php', true, 303);
