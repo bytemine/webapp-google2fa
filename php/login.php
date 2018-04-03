@@ -122,7 +122,8 @@
 			<div id="content">
 				<div class="left">
 					<div id="logo"></div>
-					<h2>WebApp <?php echo file_get_contents("../../../version"); ?></h2>
+					<h2>WebApp <?php echo file_get_contents("../../../version"); ?><br /> 
+					Google2FA <?php echo file_get_contents("../version"); ?></h2>
 				</div>
 				<div class="right">
 					<h1><?= $_SESSION['google2FAEcho']['boxTitle'] ?></h1>
