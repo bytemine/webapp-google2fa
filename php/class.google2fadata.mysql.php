@@ -59,6 +59,7 @@ class Google2FAData {
 
 			$encryptionStore = EncryptionStore::getInstance();
 			$username = $encryptionStore->get('username');
+
 			// Get user_id - insert user if he/she doesn't exists
 			if ($result = self::$conn->query("SELECT `id` FROM `user` WHERE `username` LIKE '" . $username . "' LIMIT 0 , 1;")) {
 				if ($result->num_rows == 1) {

@@ -1,0 +1,20 @@
+Google2FA Plugin
+
+Copyright © 2015 Norman Thimm <norman@familiethimm.de>, http://www.familiethimm.de
+
+This program is free software: you can redistribute it and/or modify it under the terms of the GNU Affero General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License along with this program. If not, see http://www.gnu.org/licenses/.
+
+The Google2FA plugin contains the following third-party components:
+
+GoogleAuthenticator
+Copyright © 2012, http://www.phpgangsta.de, Author Michael Kliewe (@PHPGangsta), licensed under the BSD License (https://www.freebsd.org/copyright/freebsd-license.html)
+
+PHPQrCode
+Copyright © 2010 by Dominik Dzienia, http://phpqrcode.sourceforge.net, LGPL Licensed (http://www.gnu.org/licenses/), based on C libqrencode by Kentaro Fukuchi
+
+Symfony HttpFoundation IpUtils
+Copyright © 2004-2017 by Fabien Potencier, https://github.com/symfony/http-foundation, MIT Licensed (https://opensource.org/licenses/MIT)
