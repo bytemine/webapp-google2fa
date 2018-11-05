@@ -10,6 +10,9 @@ Tested on:
 
 Release notes:
 
+0.5.2
+- Port configuration for MySQL (PLUGIN_GOOGLE2FA_DATABASE_PORT in config)
+
 0.5.1
 - Token Check optimized with retry and cancel option
 - Optimizing Code/Development

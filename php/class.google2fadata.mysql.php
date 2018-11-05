@@ -27,8 +27,9 @@ class Google2FAData {
 		if (self::$conn == null) {
 			
 			// Create connection
+			if (!defined(PLUGIN_GOOGLE2FA_DATABASE_PORT)) define('PLUGIN_GOOGLE2FA_DATABASE_PORT', ini_get("mysqli.default_port")); // new key in config.php in 0.5.2
 			self::$conn = new mysqli(PLUGIN_GOOGLE2FA_DATABASE_SERVERNAME, PLUGIN_GOOGLE2FA_DATABASE_USERNAME,
-				PLUGIN_GOOGLE2FA_DATABASE_PASSWORD, PLUGIN_GOOGLE2FA_DATABASE_DBNAME);
+				PLUGIN_GOOGLE2FA_DATABASE_PASSWORD, PLUGIN_GOOGLE2FA_DATABASE_DBNAME, PLUGIN_GOOGLE2FA_DATABASE_PORT);
 
 			// Check connection
 			if (mysqli_connect_error()) { // no object-oriented check because of compatibility with PHP 5.2.9 and 5.3.0
