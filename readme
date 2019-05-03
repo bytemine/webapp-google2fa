@@ -13,6 +13,13 @@ Tested on:
 
 Release notes:
 
+0.5.2
+- Port configuration for MySQL (PLUGIN_GOOGLE2FA_DATABASE_PORT in config)
+
+0.5.1
+- Token Check optimized with retry and cancel option
+- Optimizing Code/Development
+
 0.5.0
 - Add support for trusted HTTP proxies. (Attention to update: Please add new variable PLUGIN_GOOGLE2FA_TRUSTED_PROXIES in config.php - see config_default.php!)
 

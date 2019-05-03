@@ -30,6 +30,7 @@ define('PLUGIN_GOOGLE2FA_DATABASE', 'settings');
  * If PLUGIN_GOOGLE2FA_DATABASE_CREATETABLES is true, tables will be automatically created if not exist (db-user needs rights)
  */
 define('PLUGIN_GOOGLE2FA_DATABASE_SERVERNAME', 'localhost');
+define('PLUGIN_GOOGLE2FA_DATABASE_PORT', '3306'); // new key in config.php in 0.5.2
 define('PLUGIN_GOOGLE2FA_DATABASE_DBNAME', 'google2fa');
 define('PLUGIN_GOOGLE2FA_DATABASE_USERNAME', 'google2fa');
 define('PLUGIN_GOOGLE2FA_DATABASE_PASSWORD', 'password');
